@@ -1,7 +1,7 @@
 {
-  "name": "webpack-setup",
+  "name": "marketize",
   "version": "1.0.0",
-  "description": "My basic WebPack setup",
+  "description": "Simple online shop built on vainilla javascript",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrie-lhilarion/webpack-setup.git"
+    "url": "git+https://github.com/gabrie-lhilarion/marketize.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gabrie-lhilarion/webpack-setup/issues"
+    "url": "https://github.com/gabrie-lhilarion/marketize/issues"
   },
-  "homepage": "https://github.com/gabrie-lhilarion/webpack-setup#readme",
+  "homepage": "https://github.com/gabrie-lhilarion/marketize#readme",
   "devDependencies": {
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1"
