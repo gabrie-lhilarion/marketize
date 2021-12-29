@@ -1,0 +1,21 @@
+@media only screen and (max-width: 900px) {
+    body {
+      background-color: lightblue;
+      display: block;
+    }
+
+    aside {
+        display: none;
+    }
+
+    main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #mobile-menu {
+        display: block;
+        background-color: #fff;
+        height: 40px;
+    }
+}
