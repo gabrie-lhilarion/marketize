@@ -13,8 +13,11 @@
         margin-left: 0;
     }
 
-    #mobile-menu {
+    #fixed-top {
         display: block;
+    }
+
+    #mobile-menu {
         background-color: #fff;
         height: 40px;
     }

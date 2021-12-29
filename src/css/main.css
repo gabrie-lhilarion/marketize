@@ -25,6 +25,11 @@ main {
     margin-left: 25%;
 }
 
+#logo {
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
 #logo span {
     display: inline-block;
     font-weight: bold;
@@ -47,6 +52,6 @@ main {
     flex-direction: row;
 }
 
-#mobile-menu {
+#fixed-top {
     display: none;
 }
