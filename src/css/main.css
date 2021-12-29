@@ -19,6 +19,10 @@ aside {
     left: 0;
 }
 
+#top {
+
+}
+
 main {
     background-color: yellowgreen;
     width: 75%;
@@ -47,11 +51,59 @@ main {
     padding-left: 5px;
 }
 
+#logo em {
+    font-size: small;
+    color: #000;
+    display: block;
+    font-weight: normal;
+    padding-left: 35px;
+}
+
 .desktop-info-area {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    background-color: yellowgreen;
+}
+
+.desktop-info-area div {
+    margin: 0 10px;
+    position: inherit;
+
+}
+
+#user-dropdown-desktop {
+    width:80%;
+    margin: auto;
+    max-width: 230px;
+    position: relative;
+    height: 0px;
+}
+
+#user-dropdown-desktop ul {
+    background-color: #fcc;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1000;
+    width: 120px;
+    right: -1px;
+}
+
+#user-dropdown-desktop ul li {
+    padding: 5px 5px;
 }
 
 #fixed-top {
     display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.user {
+    cursor: pointer;
 }
