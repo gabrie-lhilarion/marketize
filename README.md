@@ -47,7 +47,7 @@ git clone https://github.com/Lucas-Masaba/awesome_books.git
 ![screenshot](./images/bag-of-rice.jpg)
 ![screenshot](./images/banana.jpg)
 ![screenshot](./images/beef.jpg)
-![screenshot](./images/casava-tuber.jpg)
+![screenshot](./images/casaava-tuber.jpg)
 ![screenshot](./images/cocoa-yam.jpg)
 ![screenshot](./images/condensed-palm-oil.jpg)
 ![screenshot](./images/curry-powder.jpg)
