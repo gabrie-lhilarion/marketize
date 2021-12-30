@@ -20,7 +20,6 @@
             }
         ],
         "largeImage": "link-to-github-user-content",
-        "thumbnail": "link-to-thumbnail",
         "availability": "In stock"
     },
     {
@@ -44,7 +43,6 @@
             }
         ],
         "largeImage": "link-to-github-user-content",
-        "thumbnail": "link-to-thumbnail",
         "availability": "In stock"
 
     }

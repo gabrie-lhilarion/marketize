@@ -24,7 +24,6 @@ aside {
 }
 
 main {
-    background-color: yellowgreen;
     width: 75%;
     margin-left: 25%;
 }
@@ -39,7 +38,6 @@ main {
     font-weight: bold;
     font-size: 1.5em;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: cornflowerblue;
     margin-left: 10px;
 }
 
@@ -59,17 +57,21 @@ main {
     padding-left: 35px;
 }
 
-.desktop-info-area {
+.desktop-info-area,
+.mobile-info-area {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    background-color: yellowgreen;
 }
 
 .desktop-info-area div {
     margin: 0 10px;
     position: inherit;
+}
 
+.mobile-info-area div {
+    margin: 0 15px;
+    position: inherit;
 }
 
 #user-dropdown-desktop {
@@ -80,8 +82,15 @@ main {
     height: 0px;
 }
 
+#user-dropdown-mobile {
+    width:100%;
+    margin: 0;
+    position: relative;
+    left: 0px;
+}
+
 #user-dropdown-desktop ul {
-    background-color: #fcc;
+    box-shadow: 1px 2px 5px 1px #ccc;
     padding: 0;
     margin: 0;
     list-style: none;
@@ -90,6 +99,18 @@ main {
     z-index: 1000;
     width: 120px;
     right: -1px;
+}
+
+#user-dropdown-mobile ul {
+    box-shadow: 1px 2px 5px 1px #ccc;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1000;
+    width: 120px;
+    right: 60px;
 }
 
 #user-dropdown-desktop ul li {
@@ -105,5 +126,39 @@ main {
 }
 
 .user {
+    cursor: pointer;
+}
+
+#shopping-basket-desktop {
+    position: relative;
+    height: 0;
+}
+
+#shopping-basket-desktop ul {
+    box-shadow: 1px 2px 5px 1px #ccc;
+    background-color: #fff;
+    position: absolute;
+    right: -150px;
+    width: 350px;
+    z-index: 200;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#shopping-basket-mobile ul {
+    box-shadow: 1px 2px 5px 1px #999;
+    background-color: #fff;
+    position: absolute;
+    right: 0px;
+    width: 100%;
+    max-width: 350px;
+    z-index: 200;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cart {
     cursor: pointer;
 }

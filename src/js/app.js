@@ -1,21 +1,29 @@
-import { toggleUserInfo } from './utils.js';
+import { toggleUserInfo, toggleShoppingCarts,  } from './utils.js';
 import { shoppingCartIcons, userIcons } from './dom.js';
-
 
 const App = (() => {
 
     const display = () => {
-        const targetElements = [
+        const elements = [
             'chevron-down', 
-            'chevron-up', 
-            'user-dropdown-desktop'
+            'chevron-up',
+            'chevron-down-mobile', 
+            'chevron-up-mobile', 
+            'user-dropdown-desktop',
+            'user-dropdown-mobile'
         ];
+
         userIcons.forEach( 
-            (icon ) => icon.addEventListener("click", () => toggleUserInfo(targetElements) )
+            icon => icon.addEventListener("click", () => toggleUserInfo(elements) )
         );
 
+        const shoppingBaskets = [
+            'shopping-basket-desktop',
+            'shopping-basket-mobile'
+        ]
+
         shoppingCartIcons.forEach( 
-            icon => icon.addEventListener("click", () => toggleShoppingCart() )
+            icon => icon.addEventListener("click", () => toggleShoppingCarts(shoppingBaskets) )
         )
     }
 
