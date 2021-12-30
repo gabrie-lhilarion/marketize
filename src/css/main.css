@@ -11,12 +11,14 @@ body {
 }
 
 aside {
+    box-sizing: border-box;
     height: 100vh;
     width: 25%;
     background-color: #fff;
     position: fixed;
     top: 0;
     left: 0;
+    padding-right: 20px;
 }
 
 #top {
@@ -90,6 +92,7 @@ main {
 }
 
 #user-dropdown-desktop ul {
+    background-color: rgb(255, 255, 255);
     box-shadow: 1px 2px 5px 1px #ccc;
     padding: 0;
     margin: 0;
@@ -102,6 +105,7 @@ main {
 }
 
 #user-dropdown-mobile ul {
+    background-color: rgb(255, 255, 255);
     box-shadow: 1px 2px 5px 1px #ccc;
     padding: 0;
     margin: 0;
@@ -111,11 +115,27 @@ main {
     z-index: 1000;
     width: 120px;
     right: 60px;
+    
 }
 
 #user-dropdown-desktop ul li {
-    padding: 5px 5px;
+    padding: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-transform: uppercase;
+    cursor: pointer;
 }
+
+#user-dropdown-desktop ul li:hover {
+   background-color: beige;
+}
+
+#user-dropdown-mobile ul li {
+    padding: 6px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
 
 #fixed-top {
     display: none;
@@ -162,3 +182,68 @@ main {
 .cart {
     cursor: pointer;
 }
+
+#product-categories-heading {
+    text-align: right;
+    text-transform: uppercase;
+    padding: 30px 10px;
+}
+
+#category-list a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.2em;
+    padding: 1px 10px;
+    
+}
+
+#grid {
+    padding: 5px;
+}
+
+#grid .product-item {
+    padding: 10px;
+    background-color:#fff;
+    margin: 10px 5px;
+}
+
+#grid .product-item img {
+    width: 100%;
+}
+
+#grid .product-item button {
+    padding: 10px 7px;
+    cursor: pointer;
+    float: right;
+    border: none;
+    color: #fff;
+    background-color: #000;
+    border-radius: 6px;
+}
+
+.clear {
+    clear: both;
+}
+
+@media screen and (max-width: 480px){
+	#grid[data-columns]::before {
+		content: '1 .column.size-1of1';
+	}
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+	#grid[data-columns]::before {
+		content: '2 .column.size-1of2';
+	}
+}
+@media screen and (min-width: 769px) {
+	#grid[data-columns]::before {
+		content: '3 .column.size-1of3';
+	}
+}
+
+.column { float: left; }
+.size-1of1 { width: 100%; }
+.size-1of2 { width: 50%; }
+.size-1of3 { width: 33.333%; }

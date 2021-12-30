@@ -27,7 +27,7 @@ Follow this link to my GitHub repository. Copy the link from the code button
  
 After you have copied the link, enter the command below in your terminal
  
-git clone https://github.com/Lucas-Masaba/awesome_books.git
+git clone https://github.com/gabrie-lhilarion/marketize.git
 
 ## Remember to paste the link after the git clone command 
 
@@ -42,21 +42,6 @@ git clone https://github.com/Lucas-Masaba/awesome_books.git
 ## Online View
 
 [Here]( https://github.com/gabrie-lhilarion/marketize/dist) is a link to the online view of my website
-
-## Mobile Preview
-![screenshot](./images/bag-of-rice.jpg)
-![screenshot](./images/banana.jpg)
-![screenshot](./images/beef.jpg)
-![screenshot](./images/casaava-tuber.jpg)
-![screenshot](./images/cocoa-yam.jpg)
-![screenshot](./images/condensed-palm-oil.jpg)
-![screenshot](./images/curry-powder.jpg)
-![screenshot](./images/fruites-pupkin.jpg)
-![screenshot](./images/ginger.jpg)
-![screenshot](./images/okra.jpg)
-![screenshot](./images/onions.jpg)
-![screenshot](./images/plantain.jpg)
-![screenshot](./images/yam.jpg)
 
 ## Show your support
 

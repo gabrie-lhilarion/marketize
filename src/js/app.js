@@ -1,5 +1,18 @@
-import { toggleUserInfo, toggleShoppingCarts,  } from './utils.js';
-import { shoppingCartIcons, userIcons } from './dom.js';
+import { 
+    toggleUserInfo, 
+    toggleShoppingCarts,
+    displayCategories,
+    displayAllProducts,
+
+} from './utils.js';
+
+import { 
+    shoppingCartIcons, 
+    userIcons,
+
+} from './dom.js';
+
+import  salvattore from './salvattore.js';
 
 const App = (() => {
 
@@ -25,6 +38,10 @@ const App = (() => {
         shoppingCartIcons.forEach( 
             icon => icon.addEventListener("click", () => toggleShoppingCarts(shoppingBaskets) )
         )
+
+        displayCategories();
+        displayAllProducts();
+        salvattore.rescanMediaQueries()
     }
 
     return {
