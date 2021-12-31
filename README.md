@@ -4,7 +4,7 @@
 > I have called it Marketize
 
 ## Desktop Preview
-![screenshot](./pics/screenshot.png)
+![screenshot](./images/desktop-1.png)
 
 ## Mobile Preview
 ![screenshot](./pics/screenshot.png)
