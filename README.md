@@ -41,7 +41,7 @@ git clone https://github.com/gabrie-lhilarion/marketize.git
 
 ## Online View
 
-[Here]( https://github.com/gabrie-lhilarion/marketize/dist) is a link to the online view of my website
+[Here]( https://gabrie-lhilarion.github.io/marketize/dist/) is a link to the online view of my website
 
 ## Show your support
 
