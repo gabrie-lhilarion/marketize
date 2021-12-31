@@ -3,12 +3,14 @@ import {
     toggleShoppingCarts,
     displayCategories,
     displayAllProducts,
+    getProductOfSelectedCategory,
 
 } from './utils.js';
 
 import { 
     shoppingCartIcons, 
     userIcons,
+    categoryLinks,
 
 } from './dom.js';
 
@@ -38,10 +40,34 @@ const App = (() => {
         shoppingCartIcons.forEach( 
             icon => icon.addEventListener("click", () => toggleShoppingCarts(shoppingBaskets) )
         )
-
+        
         displayCategories();
-        displayAllProducts();
-        salvattore.rescanMediaQueries()
+        
+        const everyProduct = String(window.location.hash).replace(/#/, '').replace(/_/gi, ' ')
+        if (!window.location.hash || everyProduct.toLocaleLowerCase() === "all products") {
+            displayAllProducts();
+            salvattore.rescanMediaQueries();
+        } else {
+            const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
+            getProductOfSelectedCategory(thisCategory);
+            salvattore.rescanMediaQueries();
+        }
+
+        window.addEventListener('hashchange', function() {
+            const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
+            
+            if (!window.location.hash || String(thisCategory).trim().toLocaleLowerCase() === "all products") {
+                
+                displayAllProducts();
+                salvattore.rescanMediaQueries();
+                return
+            } else {
+                
+                getProductOfSelectedCategory(thisCategory);
+                salvattore.rescanMediaQueries();            
+            }
+
+        }, false);
     }
 
     return {
