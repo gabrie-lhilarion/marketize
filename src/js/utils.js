@@ -115,7 +115,6 @@ export const getProductOfSelectedCategory = (category) => {
    <div>
        <div class="product-item">
            <img src="${item.largeImage}" alt="">
-           <h2> <i> ${item.name} </i> </h2>
            <p>
            <h2> <i> ${item.name} </i> </h2>
                 <i> ${item.description} </i>
