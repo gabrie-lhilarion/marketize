@@ -1,0 +1,29 @@
+@media only screen and (max-width: 900px) {
+    body {
+      display: block;
+      padding-top: 50px;
+    }
+
+    aside {
+        display: none;
+    }
+
+    main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #fixed-top {
+        background-color: white;
+        display: block;
+        box-shadow: 1px 1px 5px 1px #ccc;
+        position: fixed;
+        width: 101%;
+        top: 0;
+        left: 0;
+    }
+
+    #mobile-menu {
+        height: 40px;
+    }
+}
