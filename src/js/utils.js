@@ -93,9 +93,9 @@ export const displayAllProducts = () => {
     <div>
         <div class="product-item">
             <img src="${item.largeImage}" alt="">
-            <h2>${item.name}</h2>
+            <h2><i>${item.name}</i></h2>
             <p>
-                ${item.description}
+                <i>${item.description}</i>
             </p>
             <button id="${item.id}"> SHOP NOW </button>
             <p class="clear"></p>
@@ -115,9 +115,10 @@ export const getProductOfSelectedCategory = (category) => {
    <div>
        <div class="product-item">
            <img src="${item.largeImage}" alt="">
-           <h2>${item.name}</h2>
+           <h2> <i> ${item.name} </i> </h2>
            <p>
-               ${item.description}
+           <h2> <i> ${item.name} </i> </h2>
+                <i> ${item.description} </i>
            </p>
            <button id="${item.id}"> SHOP NOW </button>
            <p class="clear"></p>
