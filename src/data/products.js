@@ -239,6 +239,87 @@ const products =
         largeImage: "https://i.postimg.cc/QdFnCttj/curry-powder.jpg",
         availability: "In stock"
 
+    },
+    {
+        id: "uyeloder6j54",
+        name: "Jollof Rice",
+        description: "Delicious jollof rice prepared by the best hands",
+        category: "Cooked Food",
+        stars: "5",
+        total_sold: "23",
+        category_id: "cooked5235",
+        price_type: "multi",
+        price: [
+            { 
+                Unriped_Plantain_10kg: "150"
+            },
+            { 
+                Unriped_Plantain_20kg: "250"
+            },
+            { 
+                Unriped_Plantain_30kg: "350"
+            },
+            { 
+                Unriped_Plantain_50kg: "450"
+            }
+        ],
+        largeImage: "https://i.postimg.cc/QdFnCttj/curry-powder.jpg",
+        availability: "In stock"
+
+    },
+    {
+        id: "qqyeloij6571",
+        name: "Bole",
+        description: "Bolle for you and your frineds",
+        category: "Roasted and barbecue",
+        stars: "5",
+        total_sold: "23",
+        category_id: "roasted65235",
+        price_type: "multi",
+        price: [
+            { 
+                Unriped_Plantain_10kg: "150"
+            },
+            { 
+                Unriped_Plantain_20kg: "250"
+            },
+            { 
+                Unriped_Plantain_30kg: "350"
+            },
+            { 
+                Unriped_Plantain_50kg: "450"
+            }
+        ],
+        largeImage: "https://i.postimg.cc/QdFnCttj/curry-powder.jpg",
+        availability: "In stock"
+
+    },
+    {
+        id: "qqyeloij6571",
+        name: "Milo refill pack",
+        description: "Millo refill pack, to expire by August 30, 2024",
+        category: "Beverages",
+        stars: "5",
+        total_sold: "23",
+        category_id: "roasbeverages35",
+        price_type: "multi",
+        price: [
+            { 
+                Unriped_Plantain_10kg: "150"
+            },
+            { 
+                Unriped_Plantain_20kg: "250"
+            },
+            { 
+                Unriped_Plantain_30kg: "350"
+            },
+            { 
+                Unriped_Plantain_50kg: "450"
+            }
+        ],
+        largeImage: "https://i.postimg.cc/QdFnCttj/curry-powder.jpg",
+        availability: "In stock"
+
     }
 ]
 

@@ -60,7 +60,7 @@ const App = (() => {
                 
                 displayAllProducts();
                 salvattore.rescanMediaQueries();
-                return
+               
             } else {
                 
                 getProductOfSelectedCategory(thisCategory);
