@@ -203,6 +203,7 @@ main {
 
 #search-bar-desktop span {
     cursor: pointer;
+    margin-top: 4px;
 }
 
 #search-bar-desktop input {
@@ -380,13 +381,13 @@ main {
   .company-info {
     padding: 6px;
     display: flex;
-    color:#ccc;
+    color:#888;
     justify-content: space-around;
   }
 
   .company-location {
     padding: 8px;
-    color: #ccc;
+    color: #888;
     text-align: center;
   }
 
