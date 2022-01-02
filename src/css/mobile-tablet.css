@@ -23,7 +23,27 @@
         left: 0;
     }
 
+    .mobile-menu-wrapper {
+        overflow-x: auto;
+    }
+
     #mobile-menu {
+        width: 2000px;
+        display: flex;
         height: 40px;
+       
+    }
+
+    .product-item-mobile {
+        margin: 2px 5px;
+    }
+
+    .product-item-mobile a {
+        text-decoration: none;
+        border: solid 1px #333;
+        border-radius: 10px;
+        display: inline-block;
+        padding: 3px 7px;
+        color: #333;
     }
 }
