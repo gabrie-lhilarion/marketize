@@ -58,7 +58,7 @@ const products =
         category: "Oil and condiments",
         stars: "4",
         total_sold: "123",
-        category_id: "uuy65235",
+        category_id: "uuygh65235",
         price_type: "multi",
         price: [
             { 
@@ -109,10 +109,10 @@ const products =
         id: "ew6t76j54",
         name: "Beef",
         description: "Special beef from the normadic Fulani herdman",
-        category: "Vegetable",
+        category: "Meat",
         stars: "5",
         total_sold: "23",
-        category_id: "uuy65235",
+        category_id: "uuylo65235",
         price_type: "multi",
         price: [
             { 
@@ -318,6 +318,60 @@ const products =
             }
         ],
         largeImage: "https://i.postimg.cc/QdFnCttj/curry-powder.jpg",
+        availability: "In stock"
+
+    },
+    {
+        id: "qqyppoij6571",
+        name: "Stew packet",
+        description: "Millo refill pack, to expire by August 30, 2024",
+        category: "Collections",
+        stars: "5",
+        total_sold: "23",
+        category_id: "roascollection35",
+        price_type: "multi",
+        price: [
+            { 
+                Unriped_Plantain_10kg: "150"
+            },
+            { 
+                Unriped_Plantain_20kg: "250"
+            },
+            { 
+                Unriped_Plantain_30kg: "350"
+            },
+            { 
+                Unriped_Plantain_50kg: "450"
+            }
+        ],
+        largeImage: "https://i.postimg.cc/QdFnCttj/ginger.jpg",
+        availability: "In stock"
+
+    },
+    {
+        id: "qqyppoij65iu",
+        name: "Saddin",
+        description: "Best qaulity sadin",
+        category: "Proccessed food",
+        stars: "5",
+        total_sold: "23",
+        category_id: "roasprocces35",
+        price_type: "multi",
+        price: [
+            { 
+                Unriped_Plantain_10kg: "150"
+            },
+            { 
+                Unriped_Plantain_20kg: "250"
+            },
+            { 
+                Unriped_Plantain_30kg: "350"
+            },
+            { 
+                Unriped_Plantain_50kg: "450"
+            }
+        ],
+        largeImage: "https://i.postimg.cc/QdFnCttj/ginger.jpg",
         availability: "In stock"
 
     }

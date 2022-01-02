@@ -41,8 +41,10 @@ export const toggleShoppingCarts = (shoppingBaskets) => {
 }
 
 export const displayCategories = () => {
-    const allCategories = new Set([...products.map( item => item.category)])
-    const categoryUL = document.querySelector('#category-list ul')
+    const allCategories = new Set([...products.map( item => item.category)]);
+    const desktopMenu = document.querySelector('#category-list ul');
+    const mobileMenu = document.getElementById("mobile-menu");
+
     let listOfCategories = `<li>
         <a href="#All_products"> 
             <i> 
@@ -52,18 +54,20 @@ export const displayCategories = () => {
                 </svg>
                 </span> 
                 <span> 
-                    All Products 
+                <span class="name-of-product">All Products</span> 
                     <span class="css-spapped-arrow-all">${products.length}</span>
                 </span>
             </i>
-            <span class="arrow-span invisible">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
+            <span class="current-category">
+               
             </span> 
         </a> 
     </li>`;
+
+    let listOfCategoriesMobile = `
+    <div class="product-item-mobile">
+        <a href="#All_products"> All products <span>${products.length}</span> </a>
+    </div>`;
 
     for ( let value of allCategories.values() ) {
         listOfCategories+= `
@@ -72,22 +76,26 @@ export const displayCategories = () => {
                 <i>
                     <span class="rounded"> ${value[0]} </span>
                     <span>
-                        ${value} 
+                        <span class="name-of-product">${value}</span>
                         <span class="css-spapped-arrow"> ${products.filter( item => item.category === value).length} </span> 
                     </span>
                 </i>
-                <span class="arrow-span  invisible"">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
+                <span class="current-category">
+                   .
                 </span>
             </a>
         </li>
+        `;
+
+        listOfCategoriesMobile += `
+        <div class="product-item-mobile">
+            <a href="#${value.replace(/ /gi, '_')}"> <em> ${value} </em> <span> ${products.filter( item => item.category === value).length}</span> </a>
+        </div>
         `
     }
 
-    categoryUL.innerHTML = listOfCategories;
+    desktopMenu.innerHTML = listOfCategories;
+    mobileMenu.innerHTML = listOfCategoriesMobile;
 }
 
 export const displayAllProducts = () => {
@@ -131,4 +139,11 @@ export const getProductOfSelectedCategory = (category) => {
    ` ).join("");
 
    grid.innerHTML = listOfProducts;
+}
+
+export const indicateCurrentCategory = (element, hash) => {
+    document.querySelectorAll(`${element} li`).forEach( item => item.style.backgroundColor = 'white' )
+   //document.querySelector(`${element} a[href="${hash}"] .current-category`).style.display = 'inline-block';
+    //document.querySelector(`${element} li`).style.backgroundColor = 'white';
+    document.querySelector(`${element} a[href="${hash}"]`).parentElement.style.backgroundColor = 'whitesmoke';
 }

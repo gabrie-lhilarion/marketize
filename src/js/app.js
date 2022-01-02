@@ -4,6 +4,7 @@ import {
     displayCategories,
     displayAllProducts,
     getProductOfSelectedCategory,
+    indicateCurrentCategory
 
 } from './utils.js';
 
@@ -19,6 +20,7 @@ import  salvattore from './salvattore.js';
 const App = (() => {
 
     const display = () => {
+       
         const elements = [
             'chevron-down', 
             'chevron-up',
@@ -47,25 +49,41 @@ const App = (() => {
         if (!window.location.hash || everyProduct.toLocaleLowerCase() === "all products") {
             displayAllProducts();
             salvattore.rescanMediaQueries();
+
+            const currentHash = window.location.hash;
+            indicateCurrentCategory("#category-list", currentHash);
         } else {
             const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
             getProductOfSelectedCategory(thisCategory);
             salvattore.rescanMediaQueries();
+
+            const currentHash = window.location.hash;
+            indicateCurrentCategory("#category-list", currentHash);
         }
+
+       
 
         window.addEventListener('hashchange', function() {
             const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
+            const currentHash = window.location.hash;
             
             if (!window.location.hash || String(thisCategory).trim().toLocaleLowerCase() === "all products") {
                 
                 displayAllProducts();
                 salvattore.rescanMediaQueries();
-               
+                
+                
+                indicateCurrentCategory("#category-list", currentHash);
             } else {
                 
                 getProductOfSelectedCategory(thisCategory);
-                salvattore.rescanMediaQueries();            
+                salvattore.rescanMediaQueries();
+
+                indicateCurrentCategory("#category-list", currentHash);
+                            
             }
+
+            
 
         }, false);
     }

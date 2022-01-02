@@ -220,6 +220,17 @@ main {
     text-align: right;
 }
 
+#category-wrapper {
+    max-height: 380px;
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#category-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
 #category-list ul {
     margin: 0;
     padding: 0;
@@ -296,13 +307,6 @@ main {
     clear: both;
 }
 
-#searc-and-category-wrapper {
-    padding: 10px 0;
-    height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 .foot {
     background-color: #333;
     position: relative;
@@ -376,20 +380,37 @@ main {
     border-top: 10px solid transparent;
     border-right: 10px solid #aaa;
     border-bottom: 10px solid transparent;
-  }
+}
 
-  .company-info {
+.company-info {
     padding: 6px;
     display: flex;
     color:#888;
     justify-content: space-around;
-  }
+}
 
-  .company-location {
+.company-location {
     padding: 8px;
     color: #888;
     text-align: center;
-  }
+}
+
+.current-category {
+ 
+}
+
+@media screen and (max-width: 1160px){
+    .rounded {
+        display: none;
+        font-size: small;
+    }
+}
+
+@media screen and (max-width: 999px){
+    .name-of-product{
+        font-size: smaller;
+    }
+}
 
 @media screen and (max-width: 480px){
 	#grid[data-columns]::before {
