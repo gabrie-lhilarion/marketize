@@ -145,5 +145,10 @@ export const indicateCurrentCategory = (element, hash) => {
     document.querySelectorAll(`${element} li`).forEach( item => item.style.backgroundColor = 'white' )
    //document.querySelector(`${element} a[href="${hash}"] .current-category`).style.display = 'inline-block';
     //document.querySelector(`${element} li`).style.backgroundColor = 'white';
-    document.querySelector(`${element} a[href="${hash}"]`).parentElement.style.backgroundColor = 'whitesmoke';
+
+    if (hash === '') {
+        document.querySelector(`${element} a[href="#All_products"]`).parentElement.style.backgroundColor = 'whitesmoke';
+    } else {
+        document.querySelector(`${element} a[href="${hash}"]`).parentElement.style.backgroundColor = 'whitesmoke';
+    }
 }
