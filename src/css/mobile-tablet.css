@@ -24,14 +24,21 @@
     }
 
     .mobile-menu-wrapper {
-        overflow-x: auto;
+        width: 100vw;
     }
 
     #mobile-menu {
-        width: 2000px;
+        width: 100vw;
         display: flex;
+        overflow-x: scroll;
+        overflow-y: hidden;
         height: 40px;
-       
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    #mobile-menu::-webkit-scrollbar {
+        display: none;
     }
 
     .product-item-mobile {
@@ -40,10 +47,11 @@
 
     .product-item-mobile a {
         text-decoration: none;
-        border: solid 1px #333;
+        box-shadow: 1px 1px 2px 1px #ccc;
         border-radius: 10px;
         display: inline-block;
         padding: 3px 7px;
         color: #333;
+        text-align: center;
     }
 }

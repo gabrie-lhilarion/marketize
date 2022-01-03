@@ -4,7 +4,8 @@ import {
     displayCategories,
     displayAllProducts,
     getProductOfSelectedCategory,
-    indicateCurrentCategory
+    indicateCurrentCategory,
+    correctWidthOfElements,
 
 } from './utils.js';
 
@@ -86,6 +87,8 @@ const App = (() => {
             
 
         }, false);
+
+        correctWidthOfElements("#mobile-menu");
     }
 
     return {

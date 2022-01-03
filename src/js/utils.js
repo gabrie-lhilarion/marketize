@@ -142,13 +142,30 @@ export const getProductOfSelectedCategory = (category) => {
 }
 
 export const indicateCurrentCategory = (element, hash) => {
-    document.querySelectorAll(`${element} li`).forEach( item => item.style.backgroundColor = 'white' )
+    document.querySelectorAll(`${element} li`).forEach( item => item.style.backgroundColor = 'white' );
+    document.querySelectorAll("#mobile-menu a").forEach( item => {
+        Object.assign(item.style, {backgroundColor: 'white', color: '#555'})
+    });
    //document.querySelector(`${element} a[href="${hash}"] .current-category`).style.display = 'inline-block';
     //document.querySelector(`${element} li`).style.backgroundColor = 'white';
 
     if (hash === '') {
         document.querySelector(`${element} a[href="#All_products"]`).parentElement.style.backgroundColor = 'whitesmoke';
+
+        const mobileLinks = document.querySelector(`#mobile-menu a[href="#All_products"]`);
+        Object.assign(mobileLinks.style, {backgroundColor: '#fff', color: '#333'})
     } else {
         document.querySelector(`${element} a[href="${hash}"]`).parentElement.style.backgroundColor = 'whitesmoke';
+
+        const mobileLinks = document.querySelector(`#mobile-menu a[href="${hash}"]`);
+        Object.assign(mobileLinks.style, {backgroundColor: '#333', color: 'whiteSmoke'})
     }
+}
+
+export const correctWidthOfElements = (container) => {
+    const elements = document.querySelectorAll(`${container} a`);
+    elements.forEach( element => {
+        const textOfInnerText = element.textContent.length;
+        element.style.width = `${(textOfInnerText * 7)}px`;
+    })
 }
