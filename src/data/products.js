@@ -187,7 +187,7 @@ const products =
 
     },
     {
-        id: "u000loij6j54",
+        id: "u100loikkj54",
         name: "curry Powder",
         description: "Curry Powder fuit thefrshest brred",
         category: "Spices",
@@ -214,7 +214,7 @@ const products =
 
     },
     {
-        id: "uyeloij6j54",
+        id: "uyhtoij6j54",
         name: "curry Powder",
         description: "Curry Powder fuit thefrshest brred",
         category: "Spices",
@@ -295,7 +295,7 @@ const products =
 
     },
     {
-        id: "qqyeloij6571",
+        id: "qqyeloij65001",
         name: "Milo refill pack",
         description: "Millo refill pack, to expire by August 30, 2024",
         category: "Beverages",
@@ -322,7 +322,7 @@ const products =
 
     },
     {
-        id: "qqyppoij6571",
+        id: "q9qyppoij6571",
         name: "Stew packet",
         description: "Millo refill pack, to expire by August 30, 2024",
         category: "Collections",

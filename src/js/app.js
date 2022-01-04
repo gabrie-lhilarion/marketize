@@ -5,7 +5,8 @@ import {
     displayAllProducts,
     getProductOfSelectedCategory,
     indicateCurrentCategory,
-    correctWidthOfElements,
+    adjustWidthOfElements,
+    shopNow,
 
 } from './utils.js';
 
@@ -45,9 +46,13 @@ const App = (() => {
         )
         
         displayCategories();
+
+        // display: flex, is doing a bad job here, with the overflow-x
+        // so I had to decide the with of every elment with script!
+        adjustWidthOfElements("#mobile-menu");
         
-        const everyProduct = String(window.location.hash).replace(/#/, '').replace(/_/gi, ' ')
-        if (!window.location.hash || everyProduct.toLocaleLowerCase() === "all products") {
+        const allProduct = String(window.location.hash).replace(/#/, '').replace(/_/gi, ' ')
+        if (!window.location.hash || allProduct.toLocaleLowerCase() === "all products") {
             displayAllProducts();
             salvattore.rescanMediaQueries();
 
@@ -62,8 +67,6 @@ const App = (() => {
             indicateCurrentCategory("#category-list", currentHash);
         }
 
-       
-
         window.addEventListener('hashchange', function() {
             const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
             const currentHash = window.location.hash;
@@ -73,22 +76,20 @@ const App = (() => {
                 displayAllProducts();
                 salvattore.rescanMediaQueries();
                 
-                
                 indicateCurrentCategory("#category-list", currentHash);
             } else {
                 
                 getProductOfSelectedCategory(thisCategory);
                 salvattore.rescanMediaQueries();
 
-                indicateCurrentCategory("#category-list", currentHash);
-                            
+                indicateCurrentCategory("#category-list", currentHash);        
             }
-
-            
 
         }, false);
 
-        correctWidthOfElements("#mobile-menu");
+        const shopNowButtons = document.querySelectorAll('.shop-now');
+        console.log(shopNowButtons)
+        shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) )
     }
 
     return {

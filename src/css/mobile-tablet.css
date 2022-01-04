@@ -30,9 +30,10 @@
     #mobile-menu {
         width: 100vw;
         display: flex;
+        align-items: baseline;
         overflow-x: scroll;
         overflow-y: hidden;
-        height: 40px;
+        min-height: 40px;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
@@ -42,7 +43,7 @@
     }
 
     .product-item-mobile {
-        margin: 2px 5px;
+        margin: 6px 5px 2px 5px;
     }
 
     .product-item-mobile a {

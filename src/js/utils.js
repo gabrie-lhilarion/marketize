@@ -1,4 +1,11 @@
 import products from '../data/products.js'
+import {
+    myCart,
+    addToCart,
+    deleteFromCart,
+    increaseItem,
+    decreaseItem,
+} from './cart.js'
 
 export const toggleUserInfo = (elements) => {
     // hide shopping baskets if open
@@ -162,10 +169,14 @@ export const indicateCurrentCategory = (element, hash) => {
     }
 }
 
-export const correctWidthOfElements = (container) => {
+export const adjustWidthOfElements = (container) => {
     const elements = document.querySelectorAll(`${container} a`);
     elements.forEach( element => {
-        const textOfInnerText = element.textContent.length;
-        element.style.width = `${(textOfInnerText * 7)}px`;
+        const lengthOfInnerText = element.textContent.length;
+        element.style.width = `${(lengthOfInnerText * 7)}px`;
     })
+}
+
+export const shopNow = (e) => {
+    console.log(e.id)
 }
