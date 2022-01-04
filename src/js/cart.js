@@ -14,7 +14,7 @@ export const cart = (()=>{
 
  const increaseItem = (product) => {
     myCart[product].quantity += 1;
-    localStorage.setItem('marketuze_cart', JSON.stringify(afterDelete))
+    localStorage.setItem('marketuze_cart', JSON.stringify(myCart))
  }
 
  const decreaseItem = (product) => {

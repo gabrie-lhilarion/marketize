@@ -6,17 +6,20 @@
 ## Desktop Preview
 ![screenshot](./images/desktop-1.png)
 
+## Table Preview
+![screenshot](./pics/tablet-view.png)
+
 ## Mobile Preview
-![screenshot](./pics/screenshot.png)
+![screenshot](./pics/marketise-mobile.png)
 
 ## Built With
 
 - HTML
+- CSS
 - Javascript
-
+- Webpack
 
 ## Getting Started
-
 
 To get a local copy up and running follow these simple example steps.
 
