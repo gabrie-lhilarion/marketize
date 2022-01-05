@@ -7,10 +7,10 @@
 ![screenshot](./images/desktop-1.png)
 
 ## Table Preview
-![screenshot](./pics/tablet-view.png)
+![screenshot](./images/tablet-view.png)
 
 ## Mobile Preview
-![screenshot](./pics/marketise-mobile.png)
+![screenshot](./images/marketise-mobile.png)
 
 ## Built With
 
