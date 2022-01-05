@@ -10,7 +10,7 @@
 ![screenshot](./images/tablet-view.png)
 
 ## Mobile Preview
-![screenshot](./images/marketise-mobile.png)
+![screenshot](./images/marketise-mobile.jpg)
 
 ## Built With
 
