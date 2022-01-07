@@ -73,7 +73,9 @@ export const displayCategories = () => {
 
     let listOfCategoriesMobile = `
     <div class="product-item-mobile">
-        <a href="#All_products"> All products <span>${products.length}</span> </a>
+        <a href="#All_products"> All products 
+            <span>${products.length}</span> 
+        </a>
     </div>`;
 
     for ( let value of allCategories.values() ) {
@@ -84,7 +86,9 @@ export const displayCategories = () => {
                     <span class="rounded"> ${value[0]} </span>
                     <span>
                         <span class="name-of-product">${value}</span>
-                        <span class="css-spapped-arrow"> ${products.filter( item => item.category === value).length} </span> 
+                        <span class="css-spapped-arrow"> 
+                            ${products.filter( item => item.category === value).length} 
+                        </span> 
                     </span>
                 </i>
                 <span class="current-category">
@@ -96,7 +100,12 @@ export const displayCategories = () => {
 
         listOfCategoriesMobile += `
         <div class="product-item-mobile">
-            <a href="#${value.replace(/ /gi, '_')}"> <em> ${value} </em> <span> ${products.filter( item => item.category === value).length}</span> </a>
+            <a href="#${value.replace(/ /gi, '_')}"> 
+                <em> ${value} </em> 
+                <span> 
+                    ${products.filter( item => item.category === value).length}
+                </span> 
+            </a>
         </div>
         `
     }
@@ -110,9 +119,9 @@ export const displayAllProducts = () => {
     
     const itemsToDataSet = (productItems) => {
       
-        const numberOfitemInproduct = productItems.length;
+        const numberOfItems = productItems.length;
         let dataSet = '';
-        for (let index = 0; index < numberOfitemInproduct; index++ ) {
+        for (let index = 0; index < numberOfItems; index++ ) {
             const item = Object.values(productItems[index]);
             dataSet += `
                 data-number-${index + 1 }="${item[0]}" 
@@ -134,7 +143,10 @@ export const displayAllProducts = () => {
             <p>
                 <i>${product.description}</i>
             </p>
-            <button id="${product.id}" data-length=${product.items.length} ${itemsToDataSet(product.items)} class="shop-now"> 
+            <button id="${product.id}" 
+            data-length=${product.items.length} ${itemsToDataSet(product.items)} 
+            class="shop-now"
+            > 
                 SHOP NOW 
             </button>
             <p class="clear"></p>
