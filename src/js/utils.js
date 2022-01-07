@@ -107,16 +107,36 @@ export const displayCategories = () => {
 
 export const displayAllProducts = () => {
     const grid = document.getElementById('grid');
+    
+    const itemsToDataSet = (productItems) => {
+      
+        const numberOfitemInproduct = productItems.length;
+        let dataSet = '';
+        for (let index = 0; index < numberOfitemInproduct; index++ ) {
+            const item = Object.values(productItems[index]);
+            dataSet += `
+                data-number-${index + 1 }="${item[0]}" 
+                data-name-${index + 1}="${item[1].replace(/ /g, '_')}"  
+                data-price-${index + 1}="${item[2]}" 
+            `;
+          
+        }
+    
+        return dataSet;
+    }
  
-    const listOfProducts = products.map(item => `
+    const listOfProducts = products.map(product => `
+    
     <div>
         <div class="product-item">
-            <img src="${item.largeImage}" alt="">
-            <h2><i>${item.name}</i></h2>
+            <img src="${product.largeImage}" alt="">
+            <h2><i>${product.name}</i></h2>
             <p>
-                <i>${item.description}</i>
+                <i>${product.description}</i>
             </p>
-            <button id="${item.id}"> SHOP NOW </button>
+            <button id="${product.id}" data-length=${product.items.length} ${itemsToDataSet(product.items)} class="shop-now"> 
+                SHOP NOW 
+            </button>
             <p class="clear"></p>
         </div>
     </div>
@@ -127,19 +147,19 @@ export const displayAllProducts = () => {
 }
 
 export const getProductOfSelectedCategory = (category) => {
-   const productsOfCategory = products.filter( item => item.category === category )
+   const productsOfCategory = products.filter( product => product.category === category )
    const grid = document.getElementById('grid');
 
-   const listOfProducts = productsOfCategory.map(item => `
+   const listOfProducts = productsOfCategory.map(product => `
    <div>
        <div class="product-item">
-           <img src="${item.largeImage}" alt="">
+           <img src="${product.largeImage}" alt="">
          
            <p>
-           <h2> <i> ${item.name} </i> </h2>
-                <i> ${item.description} </i>
+           <h2> <i> ${product.name} </i> </h2>
+                <i> ${product.description} </i>
            </p>
-           <button id="${item.id}"> SHOP NOW </button>
+           <button id="${product.id}" class="shop-now"> SHOP NOW </button>
            <p class="clear"></p>
        </div>
    </div>
@@ -178,5 +198,6 @@ export const adjustWidthOfElements = (container) => {
 }
 
 export const shopNow = (e) => {
-    console.log(e.id)
+
+    console.log(e, e.target.id)
 }

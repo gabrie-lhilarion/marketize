@@ -88,7 +88,6 @@ const App = (() => {
         }, false);
 
         const shopNowButtons = document.querySelectorAll('.shop-now');
-        console.log(shopNowButtons)
         shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) )
     }
 
