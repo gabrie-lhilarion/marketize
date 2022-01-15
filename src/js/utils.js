@@ -1,11 +1,4 @@
-import products from '../data/products.js'
-import {
-    myCart,
-    addToCart,
-    deleteFromCart,
-    increaseItem,
-    decreaseItem,
-} from './cart.js'
+import products from '../data/products.js';
 
 export const toggleUserInfo = (elements) => {
     // hide shopping baskets if open
@@ -117,23 +110,6 @@ export const displayCategories = () => {
 export const displayAllProducts = () => {
     const grid = document.getElementById('grid');
     
-    const itemsToDataSet = (productItems) => {
-      
-        const numberOfItems = productItems.length;
-        let dataSet = '';
-        for (let index = 0; index < numberOfItems; index++ ) {
-            const item = Object.values(productItems[index]);
-            dataSet += `
-                data-number-${index + 1 }="${item[0]}" 
-                data-name-${index + 1}="${item[1].replace(/ /g, '_')}"  
-                data-price-${index + 1}="${item[2]}" 
-            `;
-          
-        }
-    
-        return dataSet;
-    }
- 
     const listOfProducts = products.map(product => `
     
     <div>
@@ -143,8 +119,8 @@ export const displayAllProducts = () => {
             <p>
                 <i>${product.description}</i>
             </p>
-            <button id="${product.id}" 
-            data-length=${product.items.length} ${itemsToDataSet(product.items)} 
+            <button 
+            id="${product.id}" 
             class="shop-now"
             > 
                 SHOP NOW 
@@ -158,7 +134,7 @@ export const displayAllProducts = () => {
     
 }
 
-export const getProductOfSelectedCategory = (category) => {
+export const displayProductsOfCategory = (category) => {
    const productsOfCategory = products.filter( product => product.category === category )
    const grid = document.getElementById('grid');
 
@@ -167,11 +143,16 @@ export const getProductOfSelectedCategory = (category) => {
        <div class="product-item">
            <img src="${product.largeImage}" alt="">
          
-           <p>
+         
            <h2> <i> ${product.name} </i> </h2>
+           <p>   
                 <i> ${product.description} </i>
            </p>
-           <button id="${product.id}" class="shop-now"> SHOP NOW </button>
+           <button id="${product.id}" 
+           class="shop-now"
+           >
+           SHOP NOW 
+           </button>
            <p class="clear"></p>
        </div>
    </div>
@@ -210,6 +191,36 @@ export const adjustWidthOfElements = (container) => {
 }
 
 export const shopNow = (e) => {
+   const productID = e.target.id;
+   const selectedItem = products.filter( product => product.id === productID )[0].items;
+   const optionsDiv = document.createElement('div');
+   let htmlContent = '';
+   selectedItem.forEach( item => {
+        htmlContent += `
+        <div class="item-list">
+            <p>  <i class="item_name"> ${item.item_name}  </i></p>
+            <p class="price-add-to-cart"> 
+                <span class="price"> <i> &#8358; ${item.price}  </i></span>
+                <button 
+                class="add-to-cart"
+                data-id="${productID}" 
+                data-product-number="${item.item_number}"
+                data-product-name="${item.item_name}"
+                data-product-pice="${item.price}"
+                >
+                Add to cart
+                </button>
+            </p>
+        </div>
+        `;
+   });
 
-    console.log(e, e.target.id)
+   optionsDiv.innerHTML = htmlContent;
+   e.target.before(optionsDiv);
+   e.target.remove();
+}
+
+export const startCartEvents = (e) => {
+    const itemId = e.dataset.id;
+    console.log(itemId);
 }

@@ -3,17 +3,18 @@ import {
     toggleShoppingCarts,
     displayCategories,
     displayAllProducts,
-    getProductOfSelectedCategory,
+    displayProductsOfCategory,
     indicateCurrentCategory,
     adjustWidthOfElements,
     shopNow,
+    startCartEvents,
 
 } from './utils.js';
 
 import { 
     shoppingCartIcons, 
     userIcons,
-    categoryLinks,
+    grid,
 
 } from './dom.js';
 
@@ -48,7 +49,7 @@ const App = (() => {
         displayCategories();
 
         // display: flex, is doing a bad job here, with the overflow-x
-        // so I had to decide the with of every elment with script!
+        // so I had to decide the width of every elment with script!
         adjustWidthOfElements("#mobile-menu");
         
         const allProduct = String(window.location.hash).replace(/#/, '').replace(/_/gi, ' ')
@@ -60,7 +61,7 @@ const App = (() => {
             indicateCurrentCategory("#category-list", currentHash);
         } else {
             const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
-            getProductOfSelectedCategory(thisCategory);
+            displayProductsOfCategory(thisCategory);
             salvattore.rescanMediaQueries();
 
             const currentHash = window.location.hash;
@@ -79,16 +80,21 @@ const App = (() => {
                 indicateCurrentCategory("#category-list", currentHash);
             } else {
                 
-                getProductOfSelectedCategory(thisCategory);
+                displayProductsOfCategory(thisCategory);
                 salvattore.rescanMediaQueries();
 
                 indicateCurrentCategory("#category-list", currentHash);        
             }
 
+            const shopNowButtons = document.querySelectorAll('.shop-now');
+            shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) )
+
         }, false);
 
         const shopNowButtons = document.querySelectorAll('.shop-now');
-        shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) )
+        shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) );
+
+        
     }
 
     return {
