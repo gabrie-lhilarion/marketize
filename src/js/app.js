@@ -94,7 +94,11 @@ const App = (() => {
         const shopNowButtons = document.querySelectorAll('.shop-now');
         shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) );
 
-        
+        grid.addEventListener('click', (e) => { 
+            if (e.target.className === 'add-to-cart') {
+                startCartEvents(e);
+            }
+        } );
     }
 
     return {

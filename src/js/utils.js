@@ -1,4 +1,15 @@
 import products from '../data/products.js';
+import Cart from '../js/cart.js';
+
+const {
+    myCart,
+    addToCart,
+    deleteFromCart,
+    increaseItem,
+    decreaseItem,
+    grandTotal,
+}
+= Cart;
 
 export const toggleUserInfo = (elements) => {
     // hide shopping baskets if open
@@ -49,7 +60,9 @@ export const displayCategories = () => {
         <a href="#All_products"> 
             <i> 
                 <span class="rounded"> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                width="16" height="16" fill="currentColor" 
+                class="bi bi-house-door-fill" viewBox="0 0 16 16">
                 <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
                 </svg>
                 </span> 
@@ -66,7 +79,8 @@ export const displayCategories = () => {
 
     let listOfCategoriesMobile = `
     <div class="product-item-mobile">
-        <a href="#All_products"> All products 
+        <a href="#All_products"> 
+            <em> All products </em> 
             <span>${products.length}</span> 
         </a>
     </div>`;
@@ -183,10 +197,10 @@ export const indicateCurrentCategory = (element, hash) => {
 }
 
 export const adjustWidthOfElements = (container) => {
-    const elements = document.querySelectorAll(`${container} a`);
+    const elements = document.querySelectorAll(`${container} a em`);
     elements.forEach( element => {
         const lengthOfInnerText = element.textContent.length;
-        element.style.width = `${(lengthOfInnerText * 7)}px`;
+        element.parentElement.style.width = `${(lengthOfInnerText * 9)}px`;
     })
 }
 
@@ -203,10 +217,10 @@ export const shopNow = (e) => {
                 <span class="price"> <i> &#8358; ${item.price}  </i></span>
                 <button 
                 class="add-to-cart"
-                data-id="${productID}" 
+                data-product-id="${productID}" 
                 data-product-number="${item.item_number}"
                 data-product-name="${item.item_name}"
-                data-product-pice="${item.price}"
+                data-product-price="${item.price}"
                 >
                 Add to cart
                 </button>
@@ -221,6 +235,52 @@ export const shopNow = (e) => {
 }
 
 export const startCartEvents = (e) => {
-    const itemId = e.dataset.id;
-    console.log(itemId);
+    const id = e.target.dataset.productId;
+    const name = e.target.dataset.productName;
+    const number = e.target.dataset.productNumber; 
+    const price = e.target.dataset.productPrice;
+    const quantity = 1;
+    const image = products.filter( item => item.id === id)[0].largeImage;
+    
+    const newItem = {
+        id,
+        name,
+        number,
+        price,
+        quantity,
+        image,
+    }
+
+    const cartPlusMinus =  `
+    <span class="cart-events">
+
+    <button 
+    class="minus"
+    data-product-id = ${id}
+    data-product-name = ${name.replace(/ /gi, '_')}
+    data-product-number = ${number}
+    data-product-price = ${price}
+    >
+        &minus;
+    </button>
+
+    <span class="qtty">1</span>
+
+    <button 
+    class="add"
+    data-product-id = ${id}
+    data-product-name = ${name.replace(/ /gi, '_')}
+    data-product-number = ${number}
+    data-product-price = ${price}
+    >
+        &plus;
+    </button>
+
+    </span>
+    `;
+
+    const priceTag = e.target.previousElementSibling;
+    priceTag.insertAdjacentHTML('afterend', cartPlusMinus)
+    e.target.remove();
+    addToCart(newItem);
 }
