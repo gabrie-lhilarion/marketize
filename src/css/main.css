@@ -186,6 +186,13 @@ main {
     cursor: pointer;
 }
 
+.empty-cart {
+    text-align: center;
+    font-weight: bolder;
+    height: 100px;
+    line-height: 100px;
+}
+
 .item-image {
     padding: 12px;
 }

@@ -157,7 +157,6 @@ export const displayProductsOfCategory = (category) => {
        <div class="product-item">
            <img src="${product.largeImage}" alt="">
          
-         
            <h2> <i> ${product.name} </i> </h2>
            <p>   
                 <i> ${product.description} </i>
@@ -235,6 +234,10 @@ export const shopNow = (e) => {
 }
 
 export const startCartEvents = (e) => {
+    const emptyCart = document.querySelectorAll('.empty-cart');
+    if (emptyCart) {
+        emptyCart.forEach( item => item.remove() );
+    }
     const id = e.target.dataset.productId;
     const name = e.target.dataset.productName;
     const number = e.target.dataset.productNumber; 
