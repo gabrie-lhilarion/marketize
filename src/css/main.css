@@ -184,6 +184,21 @@ main {
 
 .cart {
     cursor: pointer;
+    position: relative;
+}
+
+.total-in-cart {
+    font-size: small;
+    font-weight: bolder;
+    position: absolute;
+    right: 7px;
+    background-color: black;
+    border-radius: 10px;
+    color: #fff;
+    display: inline-block;
+    min-width: 12px;
+    padding: 1px;
+    text-align: center;
 }
 
 .empty-cart {
@@ -202,6 +217,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top: dotted 1px #ccc;
 }
 
 .cart-item-details {
@@ -382,6 +398,16 @@ main {
 }
 
 .price {
+    color: #000; 
+    font-weight: bolder;
+}
+
+.quantity {
+    color: #000; 
+    font-weight: bolder;
+}
+
+.item-total {
     color: #000; 
     font-weight: bolder;
 }

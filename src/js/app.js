@@ -8,6 +8,8 @@ import {
     adjustWidthOfElements,
     shopNow,
     startCartEvents,
+    syncSessionDataToDom,
+    plusItem,
 
 } from './utils.js';
 
@@ -87,7 +89,10 @@ const App = (() => {
             }
 
             const shopNowButtons = document.querySelectorAll('.shop-now');
-            shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) )
+            shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) );
+
+            const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
+            syncSessionDataToDom(sessionData); 
 
         }, false);
 
@@ -95,10 +100,17 @@ const App = (() => {
         shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) );
 
         grid.addEventListener('click', (e) => { 
-            if (e.target.className === 'add-to-cart') {
+            if (e.target.classList.contains('add-to-cart')) {
                 startCartEvents(e);
             }
+       
+            if (e.target.classList.contains('plus')) {
+                plusItem(e);
+            }
         } );
+
+        const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
+        syncSessionDataToDom(sessionData); 
     }
 
     return {

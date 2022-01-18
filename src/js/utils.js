@@ -4,10 +4,12 @@ import Cart from '../js/cart.js';
 const {
     myCart,
     addToCart,
+    addToCartView,
     deleteFromCart,
     increaseItem,
     decreaseItem,
-    grandTotal,
+    numberOfItem,
+    cartTotal,
 }
 = Cart;
 
@@ -215,7 +217,7 @@ export const shopNow = (e) => {
             <p class="price-add-to-cart"> 
                 <span class="price"> <i> &#8358; ${item.price}  </i></span>
                 <button 
-                class="add-to-cart"
+                class="add-to-cart ${productID}"
                 data-product-id="${productID}" 
                 data-product-number="${item.item_number}"
                 data-product-name="${item.item_name}"
@@ -233,11 +235,10 @@ export const shopNow = (e) => {
    e.target.remove();
 }
 
+
+
 export const startCartEvents = (e) => {
-    const emptyCart = document.querySelectorAll('.empty-cart');
-    if (emptyCart) {
-        emptyCart.forEach( item => item.remove() );
-    }
+ 
     const id = e.target.dataset.productId;
     const name = e.target.dataset.productName;
     const number = e.target.dataset.productNumber; 
@@ -255,7 +256,7 @@ export const startCartEvents = (e) => {
     }
 
     const cartPlusMinus =  `
-    <span class="cart-events">
+    <span class="cart-events ${id}">
 
     <button 
     class="minus"
@@ -270,7 +271,7 @@ export const startCartEvents = (e) => {
     <span class="qtty">1</span>
 
     <button 
-    class="add"
+    class="plus"
     data-product-id = ${id}
     data-product-name = ${name.replace(/ /gi, '_')}
     data-product-number = ${number}
@@ -283,7 +284,88 @@ export const startCartEvents = (e) => {
     `;
 
     const priceTag = e.target.previousElementSibling;
+
+    const quantityInCart = document.querySelectorAll('.total-in-cart');
+    quantityInCart.forEach( cart => cart.textContent = Number(cart.textContent)  + 1 );
+
     priceTag.insertAdjacentHTML('afterend', cartPlusMinus)
     e.target.remove();
     addToCart(newItem);
+}
+
+export const  syncSessionDataToDom = (sessionData) => {
+    if (sessionData.length === 0) return
+
+    sessionData.forEach( data => {
+        const {id, name, number, price, quantity} = data;
+
+        const shopNowButton = document.getElementById(`${id}`);
+
+        if (shopNowButton) {
+            shopNowButton.click();
+        }
+
+        if (document.querySelector(`.add-to-cart.${id}[data-product-number="${number}"]`)) {
+
+            const button = document.querySelector(`.add-to-cart.${data.id}[data-product-number="${number}"]`);
+            const priceTag = button.previousElementSibling;
+            
+            const cartPlusMinus =  `
+            <span class="cart-events ${id}">
+        
+            <button 
+            class="minus"
+            data-product-id = ${id}
+            data-product-name = ${name.replace(/ /gi, '_')}
+            data-product-number = ${number}
+            data-product-price = ${price}
+            >
+                &minus;
+            </button>
+        
+            <span class="qtty">${quantity}</span>
+        
+            <button 
+            class="plus"
+            data-product-id = ${id}
+            data-product-name = ${name.replace(/ /gi, '_')}
+            data-product-number = ${number}
+            data-product-price = ${price}
+            >
+                &plus;
+            </button>
+        
+            </span>
+            `;
+
+            priceTag.insertAdjacentHTML('afterend', cartPlusMinus);
+            button.remove();
+        } 
+        addToCartView(data);
+    });
+
+    const cartTotalContainers = document.querySelectorAll('.total-in-cart');
+    cartTotalContainers.forEach( container => container.textContent = numberOfItem);
+}
+
+const recalculateShoppingCart = (data) => {
+    const { id, price, number, quantity } = data;
+    console.log( document.querySelectorAll(`#${id}-${number} .quantity`), quantity  );
+
+    document.querySelectorAll(`.${id}-${number} .quantity`).forEach( element => element.textContent = quantity + 1 )
+    document.querySelectorAll(`.${id}-${number} .item-total`).forEach( element => element.textContent = quantity * price )
+}
+
+export const plusItem = (e) => {
+
+    const id = e.target.dataset.productId;
+    const number = Number(e.target.dataset.productNumber);
+    const price = Number(e.target.dataset.productPrice);
+    const quantity = Number(e.target.previousElementSibling.textContent);
+
+    increaseItem(id, number);
+
+    const data = {id, number, price, quantity};
+    recalculateShoppingCart(data);
+    e.target.previousElementSibling.textContent = quantity + 1
 }
