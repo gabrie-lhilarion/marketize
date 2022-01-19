@@ -235,19 +235,28 @@ export const shopNow = (e) => {
    e.target.remove();
 }
 
-
+const keyGen = (len) => {
+    let key = '';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz';
+    const charsLen = chars.length;
+    for (let i = 0; i < len; i += 1) {
+      key += chars.charAt(Math.floor(Math.random() * charsLen));
+    }
+    return key;
+}
 
 export const startCartEvents = (e) => {
- 
-    const id = e.target.dataset.productId;
+    const cartId = keyGen(8);
+    const productId = e.target.dataset.productId;
     const name = e.target.dataset.productName;
     const number = e.target.dataset.productNumber; 
     const price = e.target.dataset.productPrice;
     const quantity = 1;
-    const image = products.filter( item => item.id === id)[0].largeImage;
+    const image = products.filter( item => item.id === productId)[0].largeImage;
     
     const newItem = {
-        id,
+        cartId,
+        productId,
         name,
         number,
         price,
@@ -256,14 +265,14 @@ export const startCartEvents = (e) => {
     }
 
     const cartPlusMinus =  `
-    <span class="cart-events ${id}">
+    <span id="${cartId}" class="cart-events ${productId}">
 
     <button 
     class="minus"
-    data-product-id = ${id}
-    data-product-name = ${name.replace(/ /gi, '_')}
-    data-product-number = ${number}
-    data-product-price = ${price}
+    data-product-id="${productId}"
+    data-product-name="${name.replace(/ /gi, '_')}"
+    data-product-number="${number}"
+    data-product-price="${price}"
     >
         &minus;
     </button>
@@ -272,10 +281,10 @@ export const startCartEvents = (e) => {
 
     <button 
     class="plus"
-    data-product-id = ${id}
-    data-product-name = ${name.replace(/ /gi, '_')}
-    data-product-number = ${number}
-    data-product-price = ${price}
+    data-product-id="${productId}"
+    data-product-name="${name.replace(/ /gi, '_')}"
+    data-product-number="${number}"
+    data-product-price="${price}"
     >
         &plus;
     </button>
@@ -297,28 +306,28 @@ export const  syncSessionDataToDom = (sessionData) => {
     if (sessionData.length === 0) return
 
     sessionData.forEach( data => {
-        const {id, name, number, price, quantity} = data;
+        const {cartId, productId, name, number, price, quantity} = data;
 
-        const shopNowButton = document.getElementById(`${id}`);
+        const shopNowButton = document.getElementById(`${productId}`);
 
         if (shopNowButton) {
             shopNowButton.click();
         }
 
-        if (document.querySelector(`.add-to-cart.${id}[data-product-number="${number}"]`)) {
+        if (document.querySelector(`.add-to-cart.${productId}[data-product-number="${number}"]`)) {
 
-            const button = document.querySelector(`.add-to-cart.${data.id}[data-product-number="${number}"]`);
+            const button = document.querySelector(`.add-to-cart.${data.productId}[data-product-number="${number}"]`);
             const priceTag = button.previousElementSibling;
             
             const cartPlusMinus =  `
-            <span class="cart-events ${id}">
+            <span id="${cartId}" class="cart-events ${productId}">
         
             <button 
             class="minus"
-            data-product-id = ${id}
-            data-product-name = ${name.replace(/ /gi, '_')}
-            data-product-number = ${number}
-            data-product-price = ${price}
+            data-product-id="${productId}"
+            data-product-name="${name.replace(/ /gi, '_')}"
+            data-product-number="${number}"
+            data-product-price="${price}"
             >
                 &minus;
             </button>
@@ -327,10 +336,10 @@ export const  syncSessionDataToDom = (sessionData) => {
         
             <button 
             class="plus"
-            data-product-id = ${id}
-            data-product-name = ${name.replace(/ /gi, '_')}
-            data-product-number = ${number}
-            data-product-price = ${price}
+            data-product-id="${productId}"
+            data-product-name="${name.replace(/ /gi, '_')}"
+            data-product-number="${number}"
+            data-product-price="${price}"
             >
                 &plus;
             </button>
@@ -348,12 +357,22 @@ export const  syncSessionDataToDom = (sessionData) => {
     cartTotalContainers.forEach( container => container.textContent = numberOfItem);
 }
 
-const recalculateShoppingCart = (data) => {
-    const { id, price, number, quantity } = data;
-    console.log( document.querySelectorAll(`#${id}-${number} .quantity`), quantity  );
+const itemsInCart = () => myCart()?.reduce( (total, current) => {
+    total += current.quantity;
+    return total;
+}, 0) || 0;
 
-    document.querySelectorAll(`.${id}-${number} .quantity`).forEach( element => element.textContent = quantity + 1 )
-    document.querySelectorAll(`.${id}-${number} .item-total`).forEach( element => element.textContent = quantity * price )
+const recalculateShoppingCart = (data, value) => {
+    // containers are for desktop & mobile
+    const { id, price, number, quantity } = data;
+    const quantityContainers = document.querySelectorAll(`.${id}-${number} .quantity`);
+    const itemTotalContainers = document.querySelectorAll(`.${id}-${number} .item-total`);
+
+    quantityContainers.forEach( element => element.textContent = quantity + value )
+    itemTotalContainers.forEach( element => element.textContent = (quantity + value) * price );
+
+    const cartTotalContainers = document.querySelectorAll('.total-in-cart');
+    cartTotalContainers.forEach( container => container.textContent = itemsInCart() );
 }
 
 export const plusItem = (e) => {
@@ -366,6 +385,60 @@ export const plusItem = (e) => {
     increaseItem(id, number);
 
     const data = {id, number, price, quantity};
-    recalculateShoppingCart(data);
-    e.target.previousElementSibling.textContent = quantity + 1
+
+    e.target.previousElementSibling.textContent = quantity + 1;
+
+    recalculateShoppingCart(data, 1);
+}
+
+export const minusItem = (e) => {
+
+    const cartId = e.target.parentElement.id;
+    const id = e.target.dataset.productId;
+    const number = Number(e.target.dataset.productNumber);
+    const price = Number(e.target.dataset.productPrice);
+    const quantity = Number(e.target.nextElementSibling.textContent);
+    const deleteGrandParent = (elements) => {
+        elements.forEach( element => {
+            element.parentElement.parentElement.remove()
+        })
+    };
+    const priceSpan = e.target.parentElement.previousElementSibling;
+
+    const displayAddToCartButton = () => {
+        const button = `
+        <button 
+        class="add-to-cart ${id}" 
+        data-product-id="${id}" 
+        data-product-number="${number}" 
+        data-product-name="${name}" 
+        data-product-price="${price}">
+            Add to cart
+        </button>
+        `;
+
+        e.target.parentElement.remove();
+        priceSpan.insertAdjacentHTML('afterend', button)
+    }
+
+    if (quantity > 1) {
+        decreaseItem(id, number);
+
+        const data = {cartId, id, number, price, quantity};
+    
+        e.target.nextElementSibling.textContent = quantity - 1;
+    
+        recalculateShoppingCart(data, -1);
+    } else {
+        deleteFromCart(cartId, id, number);
+
+        const quantityContainers = document.querySelectorAll(`.${id}-${number}`);
+        deleteGrandParent(quantityContainers);
+        
+        const cartTotalContainers = document.querySelectorAll('.total-in-cart');
+        cartTotalContainers.forEach( container => container.textContent = itemsInCart() );
+
+        displayAddToCartButton();
+    }
+   
 }

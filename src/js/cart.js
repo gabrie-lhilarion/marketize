@@ -15,6 +15,7 @@ const addToCart = (item) => {
    const carts = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
    carts.forEach( cart => {
       const cartItem = document.createElement('li');
+      cartItem.id = item.cartId;
       cartItem.classList.add('cart-item');
       cartItem.innerHTML = `
         <div class="item-image">
@@ -25,7 +26,7 @@ const addToCart = (item) => {
               <i> ${item.name} </i>
            </p> 
 
-           <p class="cart-more-details ${item.id}-${item.number}">
+           <p id="${item.cartId}" class="cart-more-details ${item.productId}-${item.number}">
                <i class="price"> ${item.price} </i>
                <i>&times; </i> 
                <i class="quantity"> ${item.quantity} </i> 
@@ -61,7 +62,7 @@ const addToCart = (item) => {
               <i> ${item.name} </i>
            </p> 
            
-           <p class="cart-more-details ${item.id}-${item.number}">
+           <p class="cart-more-details ${item.productId}-${item.number}">
               <i class="price"> ${item.price} </i>
               <i>&times; </i> 
               <i class="quantity"> ${item.quantity} </i> 
@@ -76,21 +77,22 @@ const addToCart = (item) => {
 
  }
 
- const deleteFromCart = (productID) => {
-    afterDelete = myCart().filter(item => item.id !== productID);
-    localStorage.setItem('marketuze_cart', JSON.stringify(afterDelete))
+ const deleteFromCart = (cartId) => {
+   const afterDelete = myCart().filter(item => item.cartId !== cartId);
+   localStorage.setItem('marketuze_cart', JSON.stringify(afterDelete))
  }
 
  const increaseItem = (id, number) => {
     console.log(id, number);
-    const contentsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
-    contentsInCart.filter( item => item.id === id && Number(item.number) === number )[0].quantity += 1;
-    localStorage.setItem('marketuze_cart', JSON.stringify(contentsInCart))
+    const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
+    itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity += 1;
+    localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
  }
 
- const decreaseItem = (product) => {
-    //myCart[product].quantity -= 1;
-    localStorage.setItem('marketuze_cart', JSON.stringify(myCart))
+ const decreaseItem = (id, number) => {
+    const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
+    itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity -= 1;
+    localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
  }
 
 const numberOfItem = myCart()?.reduce( (total, current) => {
@@ -98,12 +100,14 @@ const numberOfItem = myCart()?.reduce( (total, current) => {
    return total;
 }, 0) || 0;
 
+
 const cartTotal = myCart()?.reduce( (total, current) => {
    total += current.quantity * current.price;
    return total;
 }, 0);
 
  return {
+     myCart,
      addToCart,
      addToCartView,
      deleteFromCart,

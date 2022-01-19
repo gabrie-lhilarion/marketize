@@ -10,6 +10,7 @@ import {
     startCartEvents,
     syncSessionDataToDom,
     plusItem,
+    minusItem,
 
 } from './utils.js';
 
@@ -106,6 +107,10 @@ const App = (() => {
        
             if (e.target.classList.contains('plus')) {
                 plusItem(e);
+            }
+
+            if (e.target.classList.contains('minus')) {
+                minusItem(e);
             }
         } );
 
