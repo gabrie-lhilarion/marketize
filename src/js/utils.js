@@ -14,7 +14,6 @@ const {
 = Cart;
 
 export const toggleUserInfo = (elements) => {
-    // hide shopping baskets if open
     const shoppingBaskets = [
         'shopping-basket-desktop',
         'shopping-basket-mobile'
@@ -34,7 +33,6 @@ export const toggleUserInfo = (elements) => {
 
 export const toggleShoppingCarts = (shoppingBaskets) => {
 
-    // hide userInfo if open
     const userInfo = [
         'user-dropdown-desktop',
         'user-dropdown-mobile'
@@ -49,7 +47,6 @@ export const toggleShoppingCarts = (shoppingBaskets) => {
         const thisBasket = document.getElementById(`${basket}`);
         thisBasket.classList.toggle("hidden");
     })
-
 
 }
 
@@ -181,8 +178,6 @@ export const indicateCurrentCategory = (element, hash) => {
     document.querySelectorAll("#mobile-menu a").forEach( item => {
         Object.assign(item.style, {backgroundColor: 'white', color: '#555'})
     });
-   //document.querySelector(`${element} a[href="${hash}"] .current-category`).style.display = 'inline-block';
-    //document.querySelector(`${element} li`).style.backgroundColor = 'white';
 
     if (hash === '') {
         document.querySelector(`${element} a[href="#All_products"]`).parentElement.style.backgroundColor = 'whitesmoke';
@@ -363,7 +358,6 @@ const itemsInCart = () => myCart()?.reduce( (total, current) => {
 }, 0) || 0;
 
 const recalculateShoppingCart = (data, value) => {
-    // containers are for desktop & mobile
     const { id, price, number, quantity } = data;
     const quantityContainers = document.querySelectorAll(`.${id}-${number} .quantity`);
     const itemTotalContainers = document.querySelectorAll(`.${id}-${number} .item-total`);

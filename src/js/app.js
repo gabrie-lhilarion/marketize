@@ -50,9 +50,7 @@ const App = (() => {
         )
         
         displayCategories();
-
-        // display: flex, is doing a bad job here, with the overflow-x
-        // so I had to decide the width of every elment with script!
+        
         adjustWidthOfElements("#mobile-menu");
         
         const allProduct = String(window.location.hash).replace(/#/, '').replace(/_/gi, ' ')
