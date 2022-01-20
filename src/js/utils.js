@@ -10,6 +10,7 @@ const {
     decreaseItem,
     numberOfItem,
     cartTotal,
+    emptyCartInfo
 }
 = Cart;
 
@@ -352,7 +353,7 @@ export const  syncSessionDataToDom = (sessionData) => {
     cartTotalContainers.forEach( container => container.textContent = numberOfItem);
 }
 
-const itemsInCart = () => myCart()?.reduce( (total, current) => {
+export const itemsInCartApp = () => myCart()?.reduce( (total, current) => {
     total += current.quantity;
     return total;
 }, 0) || 0;
@@ -366,7 +367,7 @@ const recalculateShoppingCart = (data, value) => {
     itemTotalContainers.forEach( element => element.textContent = (quantity + value) * price );
 
     const cartTotalContainers = document.querySelectorAll('.total-in-cart');
-    cartTotalContainers.forEach( container => container.textContent = itemsInCart() );
+    cartTotalContainers.forEach( container => container.textContent = itemsInCartApp() );
 }
 
 export const plusItem = (e) => {
@@ -378,25 +379,27 @@ export const plusItem = (e) => {
 
     increaseItem(id, number);
 
-    const data = {id, number, price, quantity};
-
     e.target.previousElementSibling.textContent = quantity + 1;
 
+    const data = {id, number, price, quantity};
     recalculateShoppingCart(data, 1);
 }
 
 export const minusItem = (e) => {
-
+    
     const cartId = e.target.parentElement.id;
     const id = e.target.dataset.productId;
     const number = Number(e.target.dataset.productNumber);
+    const name = e.target.dataset.productName;
     const price = Number(e.target.dataset.productPrice);
     const quantity = Number(e.target.nextElementSibling.textContent);
+
     const deleteGrandParent = (elements) => {
         elements.forEach( element => {
             element.parentElement.parentElement.remove()
         })
     };
+    
     const priceSpan = e.target.parentElement.previousElementSibling;
 
     const displayAddToCartButton = () => {
@@ -405,34 +408,45 @@ export const minusItem = (e) => {
         class="add-to-cart ${id}" 
         data-product-id="${id}" 
         data-product-number="${number}" 
-        data-product-name="${name}" 
+        data-product-name="${name.replace(/_/gi,' ')}" 
         data-product-price="${price}">
             Add to cart
         </button>
         `;
 
         e.target.parentElement.remove();
-        priceSpan.insertAdjacentHTML('afterend', button)
+        priceSpan.insertAdjacentHTML('afterend', button);
+    }
+
+    const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop')
+    const indicateEmptyCart = (shoppingBaskets) => {
+
+        if (shoppingBaskets[0].children.length) return;
+
+        shoppingBaskets.forEach( basket => {
+            basket.innerHTML = emptyCartInfo;
+        });
     }
 
     if (quantity > 1) {
         decreaseItem(id, number);
+        e.target.nextElementSibling.textContent = quantity - 1;
 
         const data = {cartId, id, number, price, quantity};
-    
-        e.target.nextElementSibling.textContent = quantity - 1;
-    
         recalculateShoppingCart(data, -1);
     } else {
-        deleteFromCart(cartId, id, number);
+        deleteFromCart(cartId);
 
         const quantityContainers = document.querySelectorAll(`.${id}-${number}`);
         deleteGrandParent(quantityContainers);
-        
+
         const cartTotalContainers = document.querySelectorAll('.total-in-cart');
-        cartTotalContainers.forEach( container => container.textContent = itemsInCart() );
+        cartTotalContainers.forEach( container => container.textContent = itemsInCartApp() );
 
         displayAddToCartButton();
+
+        indicateEmptyCart(shoppingBaskets)
+        
     }
    
 }

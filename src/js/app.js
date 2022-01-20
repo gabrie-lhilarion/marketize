@@ -11,6 +11,7 @@ import {
     syncSessionDataToDom,
     plusItem,
     minusItem,
+    itemsInCartApp,
 
 } from './utils.js';
 
@@ -79,12 +80,16 @@ const App = (() => {
                 salvattore.rescanMediaQueries();
                 
                 indicateCurrentCategory("#category-list", currentHash);
+
+                
             } else {
                 
                 displayProductsOfCategory(thisCategory);
                 salvattore.rescanMediaQueries();
 
-                indicateCurrentCategory("#category-list", currentHash);        
+                indicateCurrentCategory("#category-list", currentHash);   
+                
+                
             }
 
             const shopNowButtons = document.querySelectorAll('.shop-now');
@@ -92,6 +97,9 @@ const App = (() => {
 
             const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
             syncSessionDataToDom(sessionData); 
+
+            const cartTotalContainers = document.querySelectorAll('.total-in-cart');
+            cartTotalContainers.forEach( container => container.textContent = itemsInCartApp() );
 
         }, false);
 
@@ -114,6 +122,8 @@ const App = (() => {
 
         const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
         syncSessionDataToDom(sessionData); 
+
+        
     }
 
     return {

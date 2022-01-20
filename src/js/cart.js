@@ -2,6 +2,12 @@ const Cart = (()=>{
 
 const myCart = () => JSON.parse(localStorage.getItem('marketuze_cart')) || [];
 
+const emptyCartInfo = `
+   <div class="empty-cart">
+      SHOPPING CART IS EMPTY
+   </div>
+`;
+
 const addToCart = (item) => {
 
    const shoppingCart = myCart();
@@ -12,8 +18,8 @@ const addToCart = (item) => {
        emptyCart.forEach( item => item.remove() );
    }
 
-   const carts = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
-   carts.forEach( cart => {
+   const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
+   shoppingBaskets.forEach( basket => {
       const cartItem = document.createElement('li');
       cartItem.id = item.cartId;
       cartItem.classList.add('cart-item');
@@ -36,19 +42,20 @@ const addToCart = (item) => {
         </div>
       `;
 
-      cart.appendChild(cartItem);
+      basket.appendChild(cartItem);
    });
 
    localStorage.setItem('marketuze_cart', JSON.stringify(shoppingCart))
  }
 
+ // ths should be basket
  const addToCartView = (item) => {
-   const emptyCart = document.querySelectorAll('.empty-cart');
+   const emptyCart = document.querySelectorAll('.empty-cart');// class should be renamed empty-basket
    if (emptyCart) {
        emptyCart.forEach( item => item.remove() );
    }
 
-   const carts = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
+   const carts = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop'); // carts should be renamed baskets
    carts.forEach( cart => {
       const cartItem = document.createElement('li');
       cartItem.classList.add('cart-item');
@@ -71,8 +78,13 @@ const addToCart = (item) => {
            </p>
         </div>
       `;
-
-      cart.appendChild(cartItem);
+      
+      const itemIsAlreadyInCart = document.querySelector(`.${item.productId}-${item.number}`);
+      //  itemIsAlreadyInCart should be  itemIsAlreadyInBasket
+      if (!itemIsAlreadyInCart) {
+         cart.appendChild(cartItem);
+      }
+      
    });
 
  }
@@ -83,7 +95,6 @@ const addToCart = (item) => {
  }
 
  const increaseItem = (id, number) => {
-    console.log(id, number);
     const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
     itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity += 1;
     localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
@@ -115,6 +126,7 @@ const cartTotal = myCart()?.reduce( (total, current) => {
      decreaseItem,
      numberOfItem,
      cartTotal,
+     emptyCartInfo,
  }
 })();
 
