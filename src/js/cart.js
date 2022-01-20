@@ -1,21 +1,20 @@
-const Cart = (()=>{
 
-const myCart = () => JSON.parse(localStorage.getItem('marketuze_cart')) || [];
+export  const shoppingData = () => JSON.parse(localStorage.getItem('marketuze_cart')) || [];
 
-const emptyCartInfo = `
+export  const emptyBasketInfo = `
    <div class="empty-cart">
-      SHOPPING CART IS EMPTY
+      SHOPPING BASKET IS EMPTY
    </div>
 `;
 
-const addToCart = (item) => {
+export const addToSession = (item) => {
 
-   const shoppingCart = myCart();
-   shoppingCart.push(item);
+   const sessionData =  shoppingData();
+   sessionData.push(item);
 
-   const emptyCart = document.querySelectorAll('.empty-cart');
-   if (emptyCart) {
-       emptyCart.forEach( item => item.remove() );
+   const emptyBaskets = document.querySelectorAll('.empty-cart');
+   if (emptyBaskets) {
+      emptyBaskets.forEach( emptyBasket => emptyBasket.remove() );
    }
 
    const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
@@ -45,18 +44,18 @@ const addToCart = (item) => {
       basket.appendChild(cartItem);
    });
 
-   localStorage.setItem('marketuze_cart', JSON.stringify(shoppingCart))
+   localStorage.setItem('marketuze_cart', JSON.stringify(sessionData))
  }
 
- // ths should be basket
- const addToCartView = (item) => {
-   const emptyCart = document.querySelectorAll('.empty-cart');// class should be renamed empty-basket
-   if (emptyCart) {
-       emptyCart.forEach( item => item.remove() );
+
+ export const addToShoppingBascket = (item) => {
+   const emptyBasket = document.querySelectorAll('.empty-cart');
+   if (emptyBasket) {
+      emptyBasket.forEach( item => item.remove() );
    }
 
-   const carts = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop'); // carts should be renamed baskets
-   carts.forEach( cart => {
+   const baskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop'); 
+   baskets.forEach( basket => {
       const cartItem = document.createElement('li');
       cartItem.classList.add('cart-item');
       cartItem.innerHTML = `
@@ -79,55 +78,38 @@ const addToCart = (item) => {
         </div>
       `;
       
-      const itemIsAlreadyInCart = document.querySelector(`.${item.productId}-${item.number}`);
-      //  itemIsAlreadyInCart should be  itemIsAlreadyInBasket
-      if (!itemIsAlreadyInCart) {
-         cart.appendChild(cartItem);
+      const itemIsAlreadyInBasket = document.querySelector(`.${item.productId}-${item.number}`);
+      if (!itemIsAlreadyInBasket) {
+         basket.appendChild(cartItem);
       }
       
    });
 
  }
 
- const deleteFromCart = (cartId) => {
-   const afterDelete = myCart().filter(item => item.cartId !== cartId);
+export const deleteFromSession = (cartId) => {
+   const afterDelete = shoppingData().filter(item => item.cartId !== cartId);
    localStorage.setItem('marketuze_cart', JSON.stringify(afterDelete))
- }
+}
 
- const increaseItem = (id, number) => {
-    const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
-    itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity += 1;
-    localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
- }
+export const increaseItem = (id, number) => {
+   const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
+   itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity += 1;
+   localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
+}
 
- const decreaseItem = (id, number) => {
-    const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
-    itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity -= 1;
-    localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
- }
+export const decreaseItem = (id, number) => {
+   const itemsInCart =  JSON.parse(localStorage.getItem('marketuze_cart'));
+   itemsInCart.filter( item => item.productId === id && Number(item.number) === number )[0].quantity -= 1;
+   localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart))
+}
 
-const numberOfItem = myCart()?.reduce( (total, current) => {
+export const numberOfItems = () => shoppingData()?.reduce( (total, current) => {
    total += current.quantity;
    return total;
 }, 0) || 0;
 
-
-const cartTotal = myCart()?.reduce( (total, current) => {
+export const cartTotal = () => shoppingData()?.reduce( (total, current) => {
    total += current.quantity * current.price;
    return total;
-}, 0);
-
- return {
-     myCart,
-     addToCart,
-     addToCartView,
-     deleteFromCart,
-     increaseItem,
-     decreaseItem,
-     numberOfItem,
-     cartTotal,
-     emptyCartInfo,
- }
-})();
-
-export default Cart;
+}, 0) || 0;

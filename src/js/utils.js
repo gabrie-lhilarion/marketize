@@ -1,18 +1,15 @@
 import products from '../data/products.js';
-import Cart from '../js/cart.js';
-
-const {
-    myCart,
-    addToCart,
-    addToCartView,
-    deleteFromCart,
+import {
+    shoppingData,
+    addToSession,
+    addToShoppingBascket,
+    deleteFromSession,
     increaseItem,
     decreaseItem,
-    numberOfItem,
+    numberOfItems,
     cartTotal,
-    emptyCartInfo
-}
-= Cart;
+    emptyBasketInfo
+} from '../js/cart.js';
 
 export const toggleUserInfo = (elements) => {
     const shoppingBaskets = [
@@ -22,7 +19,7 @@ export const toggleUserInfo = (elements) => {
        
     if (!document.getElementById(`${shoppingBaskets[0]}`).classList.contains('hidden')) {
         const shoppingCartIcons = document.querySelectorAll(".cart");
-        [...shoppingCartIcons][0].click();
+        shoppingCartIcons[0].click();
     }
       
     elements.forEach( (item) => {
@@ -41,7 +38,7 @@ export const toggleShoppingCarts = (shoppingBaskets) => {
 
     if (!document.getElementById(`${userInfo[0]}`).classList.contains('hidden')) {
         const userIcons = document.querySelectorAll(".user");
-        [...userIcons][0].click();
+        userIcons[0].click();
     }
 
     shoppingBaskets.forEach( (basket) => {
@@ -201,7 +198,7 @@ export const adjustWidthOfElements = (container) => {
     })
 }
 
-export const shopNow = (e) => {
+export const createAddToCartBtn = (e) => {
    const productID = e.target.id;
    const selectedItem = products.filter( product => product.id === productID )[0].items;
    const optionsDiv = document.createElement('div');
@@ -241,7 +238,7 @@ const keyGen = (len) => {
     return key;
 }
 
-export const startCartEvents = (e) => {
+export const createPlusMinusBtn = (e) => {
     const cartId = keyGen(8);
     const productId = e.target.dataset.productId;
     const name = e.target.dataset.productName;
@@ -295,7 +292,7 @@ export const startCartEvents = (e) => {
 
     priceTag.insertAdjacentHTML('afterend', cartPlusMinus)
     e.target.remove();
-    addToCart(newItem);
+    addToSession(newItem);
 }
 
 export const  syncSessionDataToDom = (sessionData) => {
@@ -346,14 +343,14 @@ export const  syncSessionDataToDom = (sessionData) => {
             priceTag.insertAdjacentHTML('afterend', cartPlusMinus);
             button.remove();
         } 
-        addToCartView(data);
+        addToShoppingBascket(data);
     });
 
     const cartTotalContainers = document.querySelectorAll('.total-in-cart');
-    cartTotalContainers.forEach( container => container.textContent = numberOfItem);
+    cartTotalContainers.forEach( container => container.textContent = numberOfItems() );
 }
 
-export const itemsInCartApp = () => myCart()?.reduce( (total, current) => {
+export const itemsInCartApp = () => shoppingData()?.reduce( (total, current) => {
     total += current.quantity;
     return total;
 }, 0) || 0;
@@ -363,11 +360,11 @@ const recalculateShoppingCart = (data, value) => {
     const quantityContainers = document.querySelectorAll(`.${id}-${number} .quantity`);
     const itemTotalContainers = document.querySelectorAll(`.${id}-${number} .item-total`);
 
-    quantityContainers.forEach( element => element.textContent = quantity + value )
+    quantityContainers.forEach( element => element.textContent = quantity + value );
     itemTotalContainers.forEach( element => element.textContent = (quantity + value) * price );
 
     const cartTotalContainers = document.querySelectorAll('.total-in-cart');
-    cartTotalContainers.forEach( container => container.textContent = itemsInCartApp() );
+    cartTotalContainers.forEach( container => container.textContent = numberOfItems()  );
 }
 
 export const plusItem = (e) => {
@@ -394,7 +391,7 @@ export const minusItem = (e) => {
     const price = Number(e.target.dataset.productPrice);
     const quantity = Number(e.target.nextElementSibling.textContent);
 
-    const deleteGrandParent = (elements) => {
+    const  deleteFromBaskets = (elements) => {
         elements.forEach( element => {
             element.parentElement.parentElement.remove()
         })
@@ -419,13 +416,18 @@ export const minusItem = (e) => {
     }
 
     const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop')
-    const indicateEmptyCart = (shoppingBaskets) => {
+    const indicateEmptyBaskets = (shoppingBaskets) => {
 
         if (shoppingBaskets[0].children.length) return;
 
         shoppingBaskets.forEach( basket => {
-            basket.innerHTML = emptyCartInfo;
+            basket.innerHTML = emptyBasketInfo;
         });
+    }
+
+    const cartTotalContainers = document.querySelectorAll('.total-in-cart');
+    const numberOfItemsInCart = (cartTotalContainers) => {
+        cartTotalContainers.forEach( container => container.textContent = numberOfItems() );
     }
 
     if (quantity > 1) {
@@ -435,17 +437,16 @@ export const minusItem = (e) => {
         const data = {cartId, id, number, price, quantity};
         recalculateShoppingCart(data, -1);
     } else {
-        deleteFromCart(cartId);
+        deleteFromSession(cartId);
 
-        const quantityContainers = document.querySelectorAll(`.${id}-${number}`);
-        deleteGrandParent(quantityContainers);
+        const items = document.querySelectorAll(`.${id}-${number}`);
+        deleteFromBaskets(items);
 
-        const cartTotalContainers = document.querySelectorAll('.total-in-cart');
-        cartTotalContainers.forEach( container => container.textContent = itemsInCartApp() );
+        numberOfItemsInCart(cartTotalContainers)
 
         displayAddToCartButton();
 
-        indicateEmptyCart(shoppingBaskets)
+        indicateEmptyBaskets(shoppingBaskets)
         
     }
    
