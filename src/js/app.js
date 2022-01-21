@@ -80,16 +80,12 @@ const App = (() => {
                 salvattore.rescanMediaQueries();
                 
                 indicateCurrentCategory("#category-list", currentHash);
-
-                
             } else {
                 
                 displayProductsOfCategory(thisCategory);
                 salvattore.rescanMediaQueries();
 
                 indicateCurrentCategory("#category-list", currentHash);   
-                
-                
             }
 
             const shopNowButtons = document.querySelectorAll('.shop-now');
@@ -104,7 +100,7 @@ const App = (() => {
         }, false);
 
         const shopNowButtons = document.querySelectorAll('.shop-now');
-        shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) );
+        shopNowButtons.forEach( button => button.addEventListener('click', (e) => createAddToCartBtn(e)) );
 
         grid.addEventListener('click', (e) => { 
             if (e.target.classList.contains('add-to-cart')) {
@@ -122,8 +118,6 @@ const App = (() => {
 
         const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
         syncSessionDataToDom(sessionData); 
-
-        
     }
 
     return {

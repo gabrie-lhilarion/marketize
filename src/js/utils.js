@@ -1,5 +1,20 @@
 import products from '../data/products.js';
+
 import {
+    linkToAllCategories,
+    addCategoryLinks,
+    linkToAllCategoriesMobile,
+    addCategoryLinksMobile,
+    mapJoinProducts,
+    mapJoinProductsOfCategory,
+    addToCartBtn,
+    makeButtonsWith,
+    makeButtonsWith_2,
+    addToCartDisplay,
+} from './dom-strings.js';
+
+import {
+    emptyBasketInfo,
     shoppingData,
     addToSession,
     addToShoppingBascket,
@@ -8,7 +23,6 @@ import {
     decreaseItem,
     numberOfItems,
     cartTotal,
-    emptyBasketInfo
 } from '../js/cart.js';
 
 export const toggleUserInfo = (elements) => {
@@ -16,11 +30,13 @@ export const toggleUserInfo = (elements) => {
         'shopping-basket-desktop',
         'shopping-basket-mobile'
     ]
-       
-    if (!document.getElementById(`${shoppingBaskets[0]}`).classList.contains('hidden')) {
+
+    const desktopBasketIsHidden = document.getElementById(`${shoppingBaskets[0]}`).classList.contains('hidden');
+    if(!desktopBasketIsHidden) {
         const shoppingCartIcons = document.querySelectorAll(".cart");
         shoppingCartIcons[0].click();
     }
+    
       
     elements.forEach( (item) => {
         const thisSelector = document.getElementById(`${item}`);
@@ -53,120 +69,34 @@ export const displayCategories = () => {
     const desktopMenu = document.querySelector('#category-list ul');
     const mobileMenu = document.getElementById("mobile-menu");
 
-    let listOfCategories = `<li>
-        <a href="#All_products"> 
-            <i> 
-                <span class="rounded"> 
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                width="16" height="16" fill="currentColor" 
-                class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-                </svg>
-                </span> 
-                <span> 
-                <span class="name-of-product">All Products</span> 
-                    <span class="css-spapped-arrow-all">${products.length}</span>
-                </span>
-            </i>
-            <span class="current-category">
-               
-            </span> 
-        </a> 
-    </li>`;
+    let desktopMenuList =  linkToAllCategories(products.length);
 
-    let listOfCategoriesMobile = `
-    <div class="product-item-mobile">
-        <a href="#All_products"> 
-            <em> All products </em> 
-            <span>${products.length}</span> 
-        </a>
-    </div>`;
+    let mobileMenuList = linkToAllCategoriesMobile(products.length) ;
 
     for ( let value of allCategories.values() ) {
-        listOfCategories+= `
-        <li>
-            <a href="#${value.replace(/ /gi, '_')}">
-                <i>
-                    <span class="rounded"> ${value[0]} </span>
-                    <span>
-                        <span class="name-of-product">${value}</span>
-                        <span class="css-spapped-arrow"> 
-                            ${products.filter( item => item.category === value).length} 
-                        </span> 
-                    </span>
-                </i>
-                <span class="current-category">
-                   .
-                </span>
-            </a>
-        </li>
-        `;
 
-        listOfCategoriesMobile += `
-        <div class="product-item-mobile">
-            <a href="#${value.replace(/ /gi, '_')}"> 
-                <em> ${value} </em> 
-                <span> 
-                    ${products.filter( item => item.category === value).length}
-                </span> 
-            </a>
-        </div>
-        `
+        desktopMenuList += addCategoryLinks(products, value);
+
+        mobileMenuList += addCategoryLinksMobile(products, value) 
     }
 
-    desktopMenu.innerHTML = listOfCategories;
-    mobileMenu.innerHTML = listOfCategoriesMobile;
+    desktopMenu.innerHTML = desktopMenuList;
+    mobileMenu.innerHTML = mobileMenuList;
 }
 
 export const displayAllProducts = () => {
     const grid = document.getElementById('grid');
     
-    const listOfProducts = products.map(product => `
-    
-    <div>
-        <div class="product-item">
-            <img src="${product.largeImage}" alt="">
-            <h2><i>${product.name}</i></h2>
-            <p>
-                <i>${product.description}</i>
-            </p>
-            <button 
-            id="${product.id}" 
-            class="shop-now"
-            > 
-                SHOP NOW 
-            </button>
-            <p class="clear"></p>
-        </div>
-    </div>
-    ` ).join("");
+    const listOfProducts = mapJoinProducts(products)
 
     grid.innerHTML = listOfProducts;
-    
 }
 
 export const displayProductsOfCategory = (category) => {
-   const productsOfCategory = products.filter( product => product.category === category )
+   const thisCategory = products.filter( product => product.category === category )
    const grid = document.getElementById('grid');
 
-   const listOfProducts = productsOfCategory.map(product => `
-   <div>
-       <div class="product-item">
-           <img src="${product.largeImage}" alt="">
-         
-           <h2> <i> ${product.name} </i> </h2>
-           <p>   
-                <i> ${product.description} </i>
-           </p>
-           <button id="${product.id}" 
-           class="shop-now"
-           >
-           SHOP NOW 
-           </button>
-           <p class="clear"></p>
-       </div>
-   </div>
-   ` ).join("");
+   const listOfProducts = mapJoinProductsOfCategory(thisCategory);
 
    grid.innerHTML = listOfProducts;
 }
@@ -204,23 +134,7 @@ export const createAddToCartBtn = (e) => {
    const optionsDiv = document.createElement('div');
    let htmlContent = '';
    selectedItem.forEach( item => {
-        htmlContent += `
-        <div class="item-list">
-            <p>  <i class="item_name"> ${item.item_name}  </i></p>
-            <p class="price-add-to-cart"> 
-                <span class="price"> <i> &#8358; ${item.price}  </i></span>
-                <button 
-                class="add-to-cart ${productID}"
-                data-product-id="${productID}" 
-                data-product-number="${item.item_number}"
-                data-product-name="${item.item_name}"
-                data-product-price="${item.price}"
-                >
-                Add to cart
-                </button>
-            </p>
-        </div>
-        `;
+        htmlContent += addToCartBtn(item, productID);
    });
 
    optionsDiv.innerHTML = htmlContent;
@@ -257,38 +171,9 @@ export const createPlusMinusBtn = (e) => {
         image,
     }
 
-    const cartPlusMinus =  `
-    <span id="${cartId}" class="cart-events ${productId}">
-
-    <button 
-    class="minus"
-    data-product-id="${productId}"
-    data-product-name="${name.replace(/ /gi, '_')}"
-    data-product-number="${number}"
-    data-product-price="${price}"
-    >
-        &minus;
-    </button>
-
-    <span class="qtty">1</span>
-
-    <button 
-    class="plus"
-    data-product-id="${productId}"
-    data-product-name="${name.replace(/ /gi, '_')}"
-    data-product-number="${number}"
-    data-product-price="${price}"
-    >
-        &plus;
-    </button>
-
-    </span>
-    `;
+    const cartPlusMinus = makeButtonsWith(newItem);
 
     const priceTag = e.target.previousElementSibling;
-
-    const quantityInCart = document.querySelectorAll('.total-in-cart');
-    quantityInCart.forEach( cart => cart.textContent = Number(cart.textContent)  + 1 );
 
     priceTag.insertAdjacentHTML('afterend', cartPlusMinus)
     e.target.remove();
@@ -299,9 +184,9 @@ export const  syncSessionDataToDom = (sessionData) => {
     if (sessionData.length === 0) return
 
     sessionData.forEach( data => {
-        const {cartId, productId, name, number, price, quantity} = data;
+        const { productId, number } = data;
 
-        const shopNowButton = document.getElementById(`${productId}`);
+        const shopNowButton = document.getElementById(`${data.productId}`);
 
         if (shopNowButton) {
             shopNowButton.click();
@@ -309,36 +194,10 @@ export const  syncSessionDataToDom = (sessionData) => {
 
         if (document.querySelector(`.add-to-cart.${productId}[data-product-number="${number}"]`)) {
 
-            const button = document.querySelector(`.add-to-cart.${data.productId}[data-product-number="${number}"]`);
+            const button = document.querySelector(`.add-to-cart.${productId}[data-product-number="${number}"]`);
             const priceTag = button.previousElementSibling;
             
-            const cartPlusMinus =  `
-            <span id="${cartId}" class="cart-events ${productId}">
-        
-            <button 
-            class="minus"
-            data-product-id="${productId}"
-            data-product-name="${name.replace(/ /gi, '_')}"
-            data-product-number="${number}"
-            data-product-price="${price}"
-            >
-                &minus;
-            </button>
-        
-            <span class="qtty">${quantity}</span>
-        
-            <button 
-            class="plus"
-            data-product-id="${productId}"
-            data-product-name="${name.replace(/ /gi, '_')}"
-            data-product-number="${number}"
-            data-product-price="${price}"
-            >
-                &plus;
-            </button>
-        
-            </span>
-            `;
+            const cartPlusMinus = makeButtonsWith_2(data);
 
             priceTag.insertAdjacentHTML('afterend', cartPlusMinus);
             button.remove();
@@ -400,22 +259,13 @@ export const minusItem = (e) => {
     const priceSpan = e.target.parentElement.previousElementSibling;
 
     const displayAddToCartButton = () => {
-        const button = `
-        <button 
-        class="add-to-cart ${id}" 
-        data-product-id="${id}" 
-        data-product-number="${number}" 
-        data-product-name="${name.replace(/_/gi,' ')}" 
-        data-product-price="${price}">
-            Add to cart
-        </button>
-        `;
+        const button = addToCartDisplay(id, number, name, price);
 
         e.target.parentElement.remove();
         priceSpan.insertAdjacentHTML('afterend', button);
     }
 
-    const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop')
+    const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
     const indicateEmptyBaskets = (shoppingBaskets) => {
 
         if (shoppingBaskets[0].children.length) return;

@@ -17,6 +17,11 @@ export const addToSession = (item) => {
       emptyBaskets.forEach( emptyBasket => emptyBasket.remove() );
    }
 
+   const increaseQttyInCart = (number = 1) => {
+      const quantityInCarts = document.querySelectorAll('.total-in-cart');
+      quantityInCarts.forEach( cart => cart.textContent = Number(cart.textContent)  + number );
+  }
+
    const shoppingBaskets = document.querySelectorAll('#cart-items-mobile, #cart-items-desktop');
    shoppingBaskets.forEach( basket => {
       const cartItem = document.createElement('li');
@@ -44,6 +49,7 @@ export const addToSession = (item) => {
       basket.appendChild(cartItem);
    });
 
+   increaseQttyInCart()
    localStorage.setItem('marketuze_cart', JSON.stringify(sessionData))
  }
 
