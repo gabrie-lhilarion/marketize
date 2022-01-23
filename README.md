@@ -50,4 +50,7 @@ git clone https://github.com/gabrie-lhilarion/marketize.git
 
 Give a ⭐️ if you like this project!
 
+## More Info
+- I am just using a JavaScript file to simulate a database, this project will have omplemetary 'API' at https://github.com/gabrie-lhilarion/marketize-api 
+
 
