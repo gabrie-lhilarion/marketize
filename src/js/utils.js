@@ -22,7 +22,7 @@ import {
     increaseItem,
     decreaseItem,
     numberOfItems,
-    cartTotal,
+    cartTotal, 
 } from '../js/cart.js';
 
 export const toggleUserInfo = (elements) => {
@@ -130,10 +130,10 @@ export const adjustWidthOfElements = (container) => {
 
 export const createAddToCartBtn = (e) => {
    const productID = e.target.id;
-   const selectedItem = products.filter( product => product.id === productID )[0].items;
+   const selectedItems = products.filter( product => product.id === productID )[0].items;
    const optionsDiv = document.createElement('div');
    let htmlContent = '';
-   selectedItem.forEach( item => {
+   selectedItems.forEach( item => {
         htmlContent += addToCartBtn(item, productID);
    });
 

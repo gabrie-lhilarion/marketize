@@ -7,7 +7,6 @@ export  const emptyBasketInfo = `
    </div>
 `;
 
-
 const createItemHtml = (item) => {
    return `
    <div class="item-image">
@@ -27,6 +26,28 @@ const createItemHtml = (item) => {
       </p>
    </div>
  `;
+}
+
+export const numberOfItems = () => shoppingData()?.reduce( (total, current) => {
+   total += current.quantity;
+   return total;
+}, 0) || 0;
+
+export const cartTotal = () => shoppingData()?.reduce( (total, current) => {
+   total += current.quantity * current.price;
+   return total;
+}, 0) || 0;
+
+export const basketSubTotal = () => {
+   return `
+      <li id="basket-subtotal" class="cart-item">
+            <i> Cart Subtotal:
+               <strong id="subtotal-amount">
+                  ${cartTotal()}
+               </strong> 
+            </i>
+      </li>
+   `
 }
 
 export const addToSession = (item) => {
@@ -97,12 +118,4 @@ export const decreaseItem = (id, number) => {
    localStorage.setItem('marketuze_cart', JSON.stringify(itemsInCart));
 }
 
-export const numberOfItems = () => shoppingData()?.reduce( (total, current) => {
-   total += current.quantity;
-   return total;
-}, 0) || 0;
 
-export const cartTotal = () => shoppingData()?.reduce( (total, current) => {
-   total += current.quantity * current.price;
-   return total;
-}, 0) || 0;
