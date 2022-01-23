@@ -3,17 +3,22 @@ import {
     toggleShoppingCarts,
     displayCategories,
     displayAllProducts,
-    getProductOfSelectedCategory,
+    displayProductsOfCategory,
     indicateCurrentCategory,
     adjustWidthOfElements,
-    shopNow,
+    createAddToCartBtn,
+    createPlusMinusBtn,
+    syncSessionDataToDom,
+    plusItem,
+    minusItem,
+    itemsInCartApp,
 
 } from './utils.js';
 
 import { 
     shoppingCartIcons, 
     userIcons,
-    categoryLinks,
+    grid,
 
 } from './dom.js';
 
@@ -46,9 +51,7 @@ const App = (() => {
         )
         
         displayCategories();
-
-        // display: flex, is doing a bad job here, with the overflow-x
-        // so I had to decide the with of every elment with script!
+        
         adjustWidthOfElements("#mobile-menu");
         
         const allProduct = String(window.location.hash).replace(/#/, '').replace(/_/gi, ' ')
@@ -60,7 +63,7 @@ const App = (() => {
             indicateCurrentCategory("#category-list", currentHash);
         } else {
             const thisCategory = window.location.hash.replace(/#/, '').replace(/_/gi, ' ');
-            getProductOfSelectedCategory(thisCategory);
+            displayProductsOfCategory(thisCategory);
             salvattore.rescanMediaQueries();
 
             const currentHash = window.location.hash;
@@ -79,17 +82,42 @@ const App = (() => {
                 indicateCurrentCategory("#category-list", currentHash);
             } else {
                 
-                getProductOfSelectedCategory(thisCategory);
+                displayProductsOfCategory(thisCategory);
                 salvattore.rescanMediaQueries();
 
-                indicateCurrentCategory("#category-list", currentHash);        
+                indicateCurrentCategory("#category-list", currentHash);   
             }
+
+            const shopNowButtons = document.querySelectorAll('.shop-now');
+            shopNowButtons.forEach( button => button.addEventListener('click', (e) => createAddToCartBtn(e)) );
+
+            const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
+            syncSessionDataToDom(sessionData); 
+
+            const cartTotalContainers = document.querySelectorAll('.total-in-cart');
+            cartTotalContainers.forEach( container => container.textContent = itemsInCartApp() );
 
         }, false);
 
         const shopNowButtons = document.querySelectorAll('.shop-now');
-        console.log(shopNowButtons)
-        shopNowButtons.forEach( button => button.addEventListener('click', (e) => shopNow(e)) )
+        shopNowButtons.forEach( button => button.addEventListener('click', (e) => createAddToCartBtn(e)) );
+
+        grid.addEventListener('click', (e) => { 
+            if (e.target.classList.contains('add-to-cart')) {
+                createPlusMinusBtn(e);
+            }
+       
+            if (e.target.classList.contains('plus')) {
+                plusItem(e);
+            }
+
+            if (e.target.classList.contains('minus')) {
+                minusItem(e);
+            }
+        } );
+
+        const sessionData = JSON.parse(localStorage.getItem('marketuze_cart')) || [];
+        syncSessionDataToDom(sessionData); 
     }
 
     return {
